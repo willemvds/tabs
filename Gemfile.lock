@@ -1,15 +1,27 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    ffi (1.17.2-x86_64-linux-gnu)
+    mini_portile2 (2.8.9)
+    rake (13.3.0)
+    rdkafka (0.21.0)
+      ffi (~> 1.15)
+      mini_portile2 (~> 2.6)
+      rake (> 12)
     sqlite3 (2.6.0-x86_64-linux-gnu)
     subprocess (1.5.7)
+    uuid7 (0.2.0)
+      zeitwerk (~> 2.4)
+    zeitwerk (2.7.3)
 
 PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  rdkafka (~> 0.21)
   sqlite3 (~> 2.6)
   subprocess (~> 1.5)
+  uuid7 (~> 0.2)
 
 BUNDLED WITH
    2.6.9

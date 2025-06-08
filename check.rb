@@ -4,7 +4,9 @@ require "net/http"
 require "openssl"
 require "uri"
 
+require "rdkafka"
 require "subprocess"
+require "uuid7"
 
 EXIT_CODE_USAGE = 1
 EXIT_CODE_FAILURE = 2
@@ -83,3 +85,14 @@ end
 
 event_json = JSON.generate(event)
 puts event_json
+
+kafka_config = { "bootstrap.servers": "localhost:9092" }
+producer = Rdkafka::Config.new(kafka_config).producer
+delivery_handle = producer.produce(
+  topic: "https",
+  payload: event_json,
+  key: UUID7.generate,
+)
+puts delivery_handle
+hr = delivery_handle.wait()
+puts hr
