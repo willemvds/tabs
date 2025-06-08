@@ -19,7 +19,7 @@ end
 fqdn = args[0]
 
 begin
-  ip = Subprocess.check_output(["dog", "-1", fqdn]).strip!
+  ips = Subprocess.check_output(["dog", "-1", fqdn]).split
 rescue Subprocess::NonZeroExit => e
   puts e.message
   exit(EXIT_CODE_FAILURE)
@@ -29,7 +29,7 @@ uri = URI("https://#{fqdn}/")
 
 event = {
   "fqdn": fqdn,
-  "ip": ip,
+  "ips": ips,
   "uri": uri,
 }
 
