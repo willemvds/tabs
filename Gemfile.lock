@@ -1,0 +1,15 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    sqlite3 (2.6.0-x86_64-linux-gnu)
+    subprocess (1.5.7)
+
+PLATFORMS
+  x86_64-linux
+
+DEPENDENCIES
+  sqlite3 (~> 2.6)
+  subprocess (~> 1.5)
+
+BUNDLED WITH
+   2.6.9
