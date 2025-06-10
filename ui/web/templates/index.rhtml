@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>That's A Bad Sign</title>
+
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+<style>
+html {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+</style>
+  </head>
+
+  <body>
+    <main>
+      <div class="wrapper">
+        <div>Domain</div>
+        <div>Online?</div>
+        <div>Cert Valid Until</div>
+        <div>Response Body Length</div>
+      </div>
+      <% domains.each do |domain| %>
+        <div class="wrapper">
+          <div><%= domain.fqdn %></div>
+          <div><% if domain.online? %>Yes<% else %>Nope :(<% end %></div>
+          <div><%= domain.cert_not_after.strftime("%Y-%m-%d") %></div>
+          <div><%= domain.response_body_length %> bytes</div>
+        </div>
+      <% end %>
+    </main>
+  </body>
+</html>
+

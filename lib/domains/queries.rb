@@ -94,7 +94,20 @@ module Domains
       "
 
       rows = db.execute(most_recent_statuses_query)
-      rows
+      rows.map do |row|
+        fields = {
+          ip: row[1],
+          is_online: row[2] == 0 ? false : true,
+          cert_issuer: row[3],
+          cert_subject: row[4],
+          cert_serial: row[5],
+          cert_not_before: DateTime.parse(row[6]),
+          cert_not_after: DateTime.parse(row[7]),
+          response_body_length: row[8],
+          created_at: row[9],
+        }
+        Status.new(row[0], fields)
+      end
     end
   end
 end
