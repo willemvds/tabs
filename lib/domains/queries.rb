@@ -52,7 +52,7 @@ module Domains
 
       fields = {
         ip: row[1],
-        is_online: row[2],
+        is_online: row[2] == 0 ? false : true,
         cert_issuer: row[3],
         cert_subject: row[4],
         cert_serial: row[5],
@@ -62,6 +62,39 @@ module Domains
         created_at: row[9],
       }
       Status.new(fqdn, fields)
+    end
+
+    def self.most_recent_statuses(db)
+      most_recent_statuses_query = "
+        SELECT
+          domains.fqdn,
+          ip,
+          is_online,
+          cert_issuer,
+          cert_subject,
+          cert_serial,
+          cert_not_before,
+          cert_not_after,
+          response_body_length,
+          domain_statuses.created_at
+        FROM
+          domains
+        INNER JOIN
+          domain_statuses
+          ON domains.fqdn = domain_statuses.fqdn
+        WHERE
+          domain_statuses.created_at = (
+            SELECT
+              MAX(created_at)
+            FROM
+              domain_statuses
+            WHERE
+              domain_statuses.fqdn = domains.fqdn
+          )
+      "
+
+      rows = db.execute(most_recent_statuses_query)
+      rows
     end
   end
 end

@@ -1,5 +1,8 @@
 module Domains
   class Status
+    ONLINE = 1
+    OFFLINE = 0
+
     attr_reader :fqdn
     attr_reader :ip
     attr_reader :cert_issuer

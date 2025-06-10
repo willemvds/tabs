@@ -78,6 +78,9 @@ module Domains
         if field == :cert_not_before || field == :cert_not_after
           v = v.to_s
         end
+        if field == :is_online
+          v = v ? Status::ONLINE : Status::OFFLINE
+        end
         v
       end
       created_at = DateTime.now()

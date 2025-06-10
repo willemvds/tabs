@@ -1,8 +1,5 @@
 module Domains
   class Domain
-    ONLINE = 1
-    OFFLINE = 0
-
     attr_reader :fqdn
     attr_reader :created_at
 
