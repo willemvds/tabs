@@ -1,0 +1,30 @@
+module Domains
+  class Status
+    attr_reader :fqdn
+    attr_reader :ip
+    attr_reader :cert_issuer
+    attr_reader :cert_subject
+    attr_reader :cert_serial
+    attr_reader :cert_not_before
+    attr_reader :cert_not_after
+    attr_reader :response_body_length
+    attr_reader :created_at
+
+    def initialize(fqdn, args)
+      @fqdn = fqdn
+      @ip = args.fetch(:ip)
+      @is_online = args.fetch(:is_online)
+      @cert_issuer = args.fetch(:cert_issuer)
+      @cert_subject = args.fetch(:cert_subject)
+      @cert_serial = args.fetch(:cert_serial)
+      @cert_not_before = args.fetch(:cert_not_before)
+      @cert_not_after = args.fetch(:cert_not_after)
+      @response_body_length = args.fetch(:response_body_length)
+      @created_at = args.fetch(:created_at)
+    end
+
+    def online?
+      @is_online
+    end
+  end
+end
