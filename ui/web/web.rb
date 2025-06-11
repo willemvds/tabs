@@ -1,5 +1,6 @@
 require "erb"
 
+require "ougai"
 require "rack"
 
 require_relative "../../lib/domains"
@@ -7,6 +8,7 @@ require_relative "../../lib/users"
 
 class Web
   def initialize(db_path)
+    @logger = Ougai::Logger.new($stdout)
     @db_path = db_path
     @index_template = ERB.new(File.read("../ui/web/templates/index.rhtml"))
 
@@ -17,7 +19,11 @@ class Web
 
   def call(env)
     req = Rack::Request.new(env)
-    puts "req=#{req.inspect}"
+    @logger.debug({
+      msg: "Request Received",
+      method: req.request_method,
+      path: req.path_info,
+    })
 
     case req.path_info
     when "/"
@@ -41,10 +47,16 @@ class Web
 
   def index(req)
     db = SQLite3::Database.new(@db_path)
-    s = Domains::Queries::most_recent_statuses(db)
-    puts "s=#{s.inspect}"
+    statuses = Domains::Queries::most_recent_statuses(db)
 
-    ic = IndexContext.new(s)
+    statuses.each do |status|
+      @logger.debug({
+        msg: "Domain Status",
+        status: status.inspect(),
+      })
+    end
+
+    ic = IndexContext.new(statuses)
     body = @index_template.result(ic.get_binding)
     [200, { "Content-Type": "text/html; charset=utf-8" }, [body]]
   end

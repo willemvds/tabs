@@ -4,6 +4,7 @@ source "https://rubygems.org"
 
 gem "falcon", "~> 0.51.1"
 gem "hashdiff", "~> 1.2"
+gem "ougai", "~> 2.0"
 gem "rack", "~> 3.1"
 gem "rdkafka", "~> 0.21"
 gem "rufo", "~> 0.18.1"
