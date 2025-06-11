@@ -45,7 +45,7 @@ class MessageProcessor
     response = msg.fetch("response")
     fields = {
       ip: msg.fetch("ips")[0],
-      is_online: response.fetch("code") == 200,
+      is_online: response.fetch("code").to_i == 200,
       cert_issuer: cert.fetch("issuer"),
       cert_subject: cert.fetch("subject"),
       cert_serial: cert.fetch("serial"),
