@@ -43,8 +43,10 @@ class MessageProcessor
     fqdn = msg.fetch("fqdn")
     cert = msg.fetch("cert")
     response = msg.fetch("response")
+    ips = msg.fetch("ips").sort!()
+    ip = ips.first()
     fields = {
-      ip: msg.fetch("ips")[0],
+      ip: ip,
       is_online: response.fetch("code").to_i == 200,
       cert_issuer: cert.fetch("issuer"),
       cert_subject: cert.fetch("subject"),
