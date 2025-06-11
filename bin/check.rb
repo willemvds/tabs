@@ -23,8 +23,17 @@ fqdn = args[0]
 begin
   ips = Subprocess.check_output(["dog", "-1", fqdn]).split
 rescue Subprocess::NonZeroExit => e
-  puts e.message
+  puts "dog err=#{e.message}"
   exit(EXIT_CODE_FAILURE)
+rescue Exception => e
+  puts "dog err=#{e.message}"
+  puts "falling back on dig..."
+  begin
+    ips = Subprocess.check_output(["dig", fqdn, "+short"]).split
+  rescue Exception => e
+    puts "dig err=#{e.message}"
+    exit(EXIT_CODE_FAILURE)
+  end
 end
 
 uri = URI("https://#{fqdn}/")
