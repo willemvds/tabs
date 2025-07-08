@@ -1,49 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for HTML5 for Linux version 5.7.45">
+  <meta charset="UTF-8">
+  <meta name="viewport" content=
+  "width=device-width, initial-scale=1.0">
+  <title>That's A Bad Sign</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <style>
+  :root {
+  --theme-bg: #282828;
+  --theme-bg-deep: #1d2021;
+  --theme-bg-shallow: #3c3836;
+  --theme-red: #fb4934;
+  --theme-green: #b8bb26;
+  --theme-aqua: #8ec07c;
+  --theme-grey: #928374;
+  --theme-yellow: #fabd2f;
+  --theme-fg: #ebdbb2;
+  }
 
-    <title>That's A Bad Sign</title>
-
-    <link rel="stylesheet" href="/style.css">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-
-<style>
-html {
+  html {
   margin: 0;
   padding: 0;
-}
+  }
 
-body {
+  body {
   margin: 0;
   padding: 0;
-}
+  background-color: var(--theme-bg-deep);
+  color: var(--theme-bg-deep);
+  font-size: 1.4rem;
+  font-family: monospace;
+  }
 
-.wrapper {
+  .wrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-}
-</style>
-  </head>
+  grid-template-columns: 1fr 40px 1fr 1fr;
+  }
 
-  <body>
-    <main>
-      <div class="wrapper">
-        <div>Domain</div>
-        <div>Online?</div>
-        <div>Cert Valid Until</div>
-        <div>Response Body Length</div>
-      </div>
-      <% domains.each do |domain| %>
+  .entry {
+  min-width: 800px;
+  background-color: var(--theme-bg-shallow);
+  color: var(--theme-fg);
+  margin: 0 0 1em 0;
+  }
+
+  .domain {
+  font-size: 1.5rem;
+  }
+
+  .bytes {
+  color: var(--theme-yellow);
+  }
+
+  .green {
+  color: var(--theme-green);
+  }
+
+  div.main {
+  display: grid;
+  place-items: center;
+  #display: flex;
+  #align-items: center;
+  #justify-content: center;
+
+  gap: 30 0;
+  }
+
+  div.online {
+  padding: 10px;
+  background-color: var(--theme-green);
+  color: var(--theme-bg);
+  font-size: 1.5rem;
+  font-weight: bold;
+  }
+
+  div.offline {
+  padding: 10px;
+  background-color: var(--theme-red);
+  color: var(--theme-bg);
+  font-size: 1.5rem;
+  font-weight: bold;
+  }
+
+  div.cert {
+  padding: 10px 0 10px 0;
+  }
+
+  div.size {
+  padding: 10px 2% 10px 20%;
+  }
+
+  .triangle {
+  width: 2px;
+  clip-path: polygon(0 0, 0 100%, 100% 50%);
+  }
+  p {
+  padding: 0;
+  margin: 0;
+  margin-top: 5px;
+  }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="main">
+      <%domains.each do |domain| %>
+        <%online_class = if domain.online? { "online" } else { "offline" }%>
         <div class="wrapper">
-          <div><%= domain.fqdn %></div>
-          <div><% if domain.online? %>Yes<% else %>Nope :(<% end %></div>
-          <div><%= domain.cert_not_after.strftime("%Y-%m-%d") %></div>
-          <div><%= domain.response_body_length %> bytes</div>
+        <div class="<%=online_class%>">
+          <p><%= domain.fqdn %></p>
         </div>
-      <% end %>
-    </main>
-  </body>
+        <div class="<%=online_class%> triangle">
+        </div>
+        <div class="cert">
+          <p><%= domain.cert_not_after.strftime("%Y-%m-%d") %></p>
+        </div>
+        <div class="size">
+          <p><%= domain.response_body_length %>bytes</p>
+        </div>
+      </div><%end %>
+    </div>
+  </main>
+</body>
 </html>
-
