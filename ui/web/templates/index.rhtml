@@ -61,6 +61,7 @@
   }
 
   div.main {
+  margin-top: 6%;
   display: grid;
   place-items: center;
   #display: flex;
@@ -108,9 +109,9 @@
 <body>
   <main>
     <div class="main">
-      <%domains.each do |domain| %>
-        <%online_class = if domain.online? { "online" } else { "offline" }%>
-        <div class="wrapper">
+    <%domains.each do |domain| %>
+      <%online_class = if domain.online? then "online" else "offline" end%>
+      <div class="wrapper entry">
         <div class="<%=online_class%>">
           <p><%= domain.fqdn %></p>
         </div>
@@ -120,10 +121,13 @@
           <p><%= domain.cert_not_after.strftime("%Y-%m-%d") %></p>
         </div>
         <div class="size">
-          <p><%= domain.response_body_length %>bytes</p>
+          <p><span class="bytes"><%= domain.response_body_length %></span> bytes</p>
         </div>
-      </div><%end %>
+      </div>
+      <br>
+    <%end %>
     </div>
   </main>
 </body>
 </html>
+
