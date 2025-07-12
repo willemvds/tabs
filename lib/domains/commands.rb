@@ -1,6 +1,8 @@
-require "date"
+# frozen_string_literal: true
 
-require "hashdiff"
+require 'date'
+
+require 'hashdiff'
 
 module Domains
   module Commands
@@ -21,16 +23,16 @@ module Domains
       Domain.new(fqdn, created_at)
     end
 
-    UPDATE_DIFF_FIELDS = [
-      :ip,
-      :is_online,
-      :cert_issuer,
-      :cert_subject,
-      :cert_serial,
-      :cert_not_before,
-      :cert_not_after,
-      :response_body_length,
-    ]
+    UPDATE_DIFF_FIELDS = %i[
+      ip
+      is_online
+      cert_issuer
+      cert_subject
+      cert_serial
+      cert_not_before
+      cert_not_after
+      response_body_length
+    ].freeze
 
     def self.update_status!(db, fqdn, new_fields)
       begin
@@ -43,14 +45,14 @@ module Domains
           cert_serial: current.cert_serial,
           cert_not_before: current.cert_not_before,
           cert_not_after: current.cert_not_after,
-          response_body_length: current.response_body_length,
+          response_body_length: current.response_body_length
         }
       rescue Errors::NotFound
         old_fields = {}
       end
 
       diff = Hashdiff.diff(new_fields, old_fields)
-      if diff.length == 0
+      if diff.empty?
         new_fields[:created_at] = current.created_at
         return Status.new(fqdn, new_fields)
       end
@@ -75,15 +77,13 @@ module Domains
 
       new_values = UPDATE_DIFF_FIELDS.map do |field|
         v = new_fields.fetch(field)
-        if field == :cert_not_before || field == :cert_not_after
-          v = v.to_s
-        end
+        v = v.to_s if %i[cert_not_before cert_not_after].include?(field)
         if field == :is_online
           v = v ? Status::ONLINE : Status::OFFLINE
         end
         v
       end
-      created_at = DateTime.now()
+      created_at = DateTime.now
       new_values = [fqdn] + new_values + [created_at.to_s]
       db.execute(create_status_query, new_values)
     end

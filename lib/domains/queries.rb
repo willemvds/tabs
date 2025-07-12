@@ -1,4 +1,6 @@
-require_relative "../errors"
+# frozen_string_literal: true
+
+require_relative '../errors'
 
 module Domains
   module Queries
@@ -14,9 +16,7 @@ module Domains
           1
       "
       rows = db.execute(by_fqdn_query, fqdn)
-      if rows.length == 0
-        raise Errors::NotFound
-      end
+      raise Errors::NotFound if rows.empty?
 
       Domain.new(rows[0][0], rows[0][1])
     end
@@ -44,22 +44,20 @@ module Domains
           1
       "
       rows = db.execute(status_by_fqdn_query, fqdn)
-      if rows.length == 0
-        raise Errors::NotFound
-      end
+      raise Errors::NotFound if rows.empty?
 
       row = rows[0]
 
       fields = {
         ip: row[1],
-        is_online: row[2] == 0 ? false : true,
+        is_online: row[2] != 0,
         cert_issuer: row[3],
         cert_subject: row[4],
         cert_serial: row[5],
         cert_not_before: DateTime.parse(row[6]),
         cert_not_after: DateTime.parse(row[7]),
         response_body_length: row[8],
-        created_at: row[9],
+        created_at: row[9]
       }
       Status.new(fqdn, fields)
     end
@@ -97,14 +95,14 @@ module Domains
       rows.map do |row|
         fields = {
           ip: row[1],
-          is_online: row[2] == 0 ? false : true,
+          is_online: row[2] != 0,
           cert_issuer: row[3],
           cert_subject: row[4],
           cert_serial: row[5],
           cert_not_before: DateTime.parse(row[6]),
           cert_not_after: DateTime.parse(row[7]),
           response_body_length: row[8],
-          created_at: row[9],
+          created_at: row[9]
         }
         Status.new(row[0], fields)
       end

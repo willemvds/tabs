@@ -1,7 +1,9 @@
-require "date"
+# frozen_string_literal: true
+
+require 'date'
 
 module Users
-  class DuplicateUser < Exception
+  class DuplicateUser < StandardError
   end
 
   module Commands
@@ -17,18 +19,18 @@ module Users
       VALUES
         (?, ?, ?, ?)
       "
-      created_at = DateTime.now()
+      created_at = DateTime.now
       begin
         db.transaction
         db.execute(create_user_query, [
-          username,
-          User::ACTIVE,
-          created_by.id,
-          created_at.to_s,
-        ])
-        rows = db.execute("SELECT last_insert_rowid()")
+                     username,
+                     User::ACTIVE,
+                     created_by.id,
+                     created_at.to_s
+                   ])
+        rows = db.execute('SELECT last_insert_rowid()')
         db.commit
-      rescue SQLite3::ConstraintException => e
+      rescue SQLite3::ConstraintException
         db.rollback
         # puts e.code
         # puts e.message

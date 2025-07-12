@@ -1,17 +1,12 @@
+# frozen_string_literal: true
+
 module Domains
   class Status
     ONLINE = 1
     OFFLINE = 0
 
-    attr_reader :fqdn
-    attr_reader :ip
-    attr_reader :cert_issuer
-    attr_reader :cert_subject
-    attr_reader :cert_serial
-    attr_reader :cert_not_before
-    attr_reader :cert_not_after
-    attr_reader :response_body_length
-    attr_reader :created_at
+    attr_reader :fqdn, :ip, :cert_issuer, :cert_subject, :cert_serial, :cert_not_before, :cert_not_after,
+                :response_body_length, :created_at
 
     def initialize(fqdn, args)
       @fqdn = fqdn

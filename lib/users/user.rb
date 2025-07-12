@@ -1,12 +1,11 @@
+# frozen_string_literal: true
+
 module Users
   class User
     ACTIVE = 1
     INACTIVE = 0
 
-    attr_reader :id
-    attr_reader :username
-    attr_reader :created_by
-    attr_reader :created_at
+    attr_reader :id, :username, :created_by, :created_at
 
     def initialize(id, username, is_active, created_by, created_at)
       @id = id

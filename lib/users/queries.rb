@@ -1,6 +1,8 @@
-require "date"
+# frozen_string_literal: true
 
-require_relative "../errors"
+require 'date'
+
+require_relative '../errors'
 
 module Users
   ROOT_ID = 1
@@ -20,24 +22,24 @@ module Users
           id ASC
       "
       rows = db.execute(all_query)
-      users = rows.map do |row|
+      rows.map do |row|
         User.new(
           row[0],
           row[1],
           row[2],
           row[3],
-          row[4],
+          row[4]
         )
       end
     end
 
-    def self.root()
-      user = User.new(
+    def self.root
+      User.new(
         ROOT_ID,
-        "root",
+        'root',
         User::ACTIVE,
-        DateTime.now(),
-        ROOT_ID,
+        DateTime.now,
+        ROOT_ID
       )
     end
 
@@ -58,9 +60,7 @@ module Users
       "
 
       rows = db.execute(by_id_query, id)
-      if rows.length == 0
-        raise Errors::NotFound.new
-      end
+      raise Errors::NotFound if rows.empty?
 
       row = rows[0]
       User.new(
@@ -68,7 +68,7 @@ module Users
         row[1],
         row[2],
         row[3],
-        row[4],
+        row[4]
       )
     end
   end

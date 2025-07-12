@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Errors
-  class NotFound < Exception
+  class NotFound < StandardError
   end
 
-  class EntityExists < Exception
+  class EntityExists < StandardError
   end
 end

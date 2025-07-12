@@ -1,1 +1,3 @@
-require_relative "web/web"
+# frozen_string_literal: true
+
+require_relative 'web/web'
