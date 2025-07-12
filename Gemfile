@@ -11,3 +11,5 @@ gem "rufo", "~> 0.18.1"
 gem "sqlite3", "~> 2.6"
 gem "subprocess", "~> 1.5"
 gem "uuid7", "~> 0.2"
+
+gem "logger", "~> 1.7"
