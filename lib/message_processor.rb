@@ -14,21 +14,8 @@ class MessageProcessor
   def start
     return if @started
 
-    config = {
-      "bootstrap.servers": 'localhost:9092',
-      "group.id": 'tabs-web'
-    }
-    consumer = Rdkafka::Config.new(config).consumer
-    @consumer = consumer
-
-    Thread.new do
-      consumer.subscribe('https')
-      consumer.each do |message|
-        puts "Message received: #{message.inspect}"
-        msg = JSON.parse(message.payload)
-        process(msg)
-      end
-    end
+    # msg = JSON.parse(message.payload)
+    # process(msg)
   end
 
   def stop

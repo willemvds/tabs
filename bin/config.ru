@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'rdkafka'
 require 'sqlite3'
 
 require_relative '../lib/message_processor'
