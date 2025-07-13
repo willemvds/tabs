@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    amq-protocol (2.3.4)
     ast (2.4.3)
     async (2.24.0)
       console (~> 1.29)
@@ -34,6 +35,9 @@ GEM
       async
       async-container (~> 0.16)
     bigdecimal (3.2.2)
+    bunny (2.24.0)
+      amq-protocol (~> 2.3)
+      sorted_set (~> 1, >= 1.0.2)
     console (1.31.0)
       fiber-annotation
       fiber-local (~> 1.1)
@@ -92,6 +96,7 @@ GEM
     racc (1.8.1)
     rack (3.1.16)
     rainbow (3.1.1)
+    rbtree (0.4.6)
     regexp_parser (2.10.0)
     rubocop (1.78.0)
       json (~> 2.3)
@@ -111,6 +116,10 @@ GEM
     samovar (2.3.0)
       console (~> 1.0)
       mapping (~> 1.0)
+    set (1.1.2)
+    sorted_set (1.0.3)
+      rbtree
+      set (~> 1.0)
     sqlite3 (2.6.0-x86_64-linux-gnu)
     subprocess (1.5.7)
     traces (0.15.2)
@@ -125,6 +134,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  bunny (~> 2.24)
   falcon (~> 0.51.1)
   hashdiff (~> 1.2)
   logger (~> 1.7)

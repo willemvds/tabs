@@ -6,7 +6,7 @@ require 'net/http'
 require 'openssl'
 require 'uri'
 
-require 'rdkafka'
+require 'bunny'
 require 'subprocess'
 require 'uuid7'
 
@@ -34,13 +34,9 @@ end
 event_json = JSON.generate(event)
 puts event_json
 
-kafka_config = { "bootstrap.servers": 'localhost:9092' }
-producer = Rdkafka::Config.new(kafka_config).producer
-delivery_handle = producer.produce(
-  topic: 'https',
-  payload: event_json,
-  key: UUID7.generate
-)
-puts delivery_handle
-hr = delivery_handle.wait
-puts hr
+connection = Bunny.new
+connection.start
+channel = connection.create_channel
+queue_name = 'https'
+queue = channel.queue(queue_name, durable: true, arguments: { 'x-queue-type' => 'quorum' })
+puts channel.default_exchange.publish(event_json, routing_key: queue.name)

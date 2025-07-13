@@ -2,6 +2,7 @@
 
 source 'https://rubygems.org'
 
+gem 'bunny', '~> 2.24'
 gem 'falcon', '~> 0.51.1'
 gem 'hashdiff', '~> 1.2'
 gem 'logger', '~> 1.7'

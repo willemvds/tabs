@@ -3,6 +3,8 @@
 require 'date'
 require 'json'
 
+require 'bunny'
+
 require_relative 'domains'
 
 class MessageProcessor
@@ -14,8 +16,22 @@ class MessageProcessor
   def start
     return if @started
 
-    # msg = JSON.parse(message.payload)
-    # process(msg)
+    @connection = Bunny.new
+    @connection.start
+
+    channel = @connection.create_channel
+    queue_name = 'https'
+    queue = channel.queue(queue_name, durable: true, arguments: { 'x-queue-type' => 'quorum' })
+
+    Thread.new do
+      queue.subscribe(block: true) do |_delivery_info, _properties, body|
+        puts "delivery info #{_delivery_info}"
+        puts "properties #{_properties}"
+        puts "body #{body}"
+        msg = JSON.parse(body)
+        process(msg)
+      end
+    end
   end
 
   def stop
