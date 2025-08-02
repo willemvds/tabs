@@ -22,12 +22,13 @@ class MessageProcessor
     queue = channel.queue(queue_name, durable: true, arguments: { 'x-queue-type' => 'quorum' })
 
     Thread.new do
-      queue.subscribe(block: true) do |_delivery_info, _properties, body|
-        puts "delivery info #{_delivery_info}"
+      queue.subscribe(manual_ack: true, block: true) do |delivery_info, _properties, body|
+        puts "delivery info #{delivery_info}"
         puts "properties #{_properties}"
         puts "body #{body}"
         msg = JSON.parse(body)
         process(msg)
+        channel.acknowledge(delivery_info.delivery_tag, false)
       end
     end
   end
