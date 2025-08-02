@@ -2,8 +2,6 @@
 
 require 'date'
 
-require_relative '../errors'
-
 module Users
   ROOT_ID = 1
 

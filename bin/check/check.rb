@@ -11,8 +11,10 @@ require 'subprocess'
 require 'toml-rb'
 require 'uuid7'
 
-require_relative '../../lib/check'
-require_relative '../../lib/rabbitmq'
+require_relative '../../autoloader'
+
+# require_relative '../../lib/check'
+# require_relative '../../lib/rabbit_mq'
 
 EXIT_CODE_USAGE = 1
 EXIT_CODE_FAILURE = 2
@@ -33,7 +35,7 @@ begin
   local_config = TomlRB.load_file(
     File.join(File.dirname(__FILE__), 'check.toml'), symbolize_keys: true
   )
-  config = config.merge(local_config)
+  config.merge(local_config)
 rescue StandardError => e
 end
 
@@ -47,14 +49,13 @@ channel = connection.create_channel
 queue_name = 'https'
 queue = channel.queue(queue_name,
                       durable: true,
-                      arguments: { RabbitMQ::QUEUE_TYPE_KEY => RabbitMQ::QUEUE_TYPE_QUORUM })
+                      arguments: { RabbitMq::QUEUE_TYPE_KEY => RabbitMq::QUEUE_TYPE_QUORUM })
 
 domains.each do |fqdn|
   begin
     event = Check.domain fqdn
   rescue Check::Bad => e
     puts "check domain err=#{e.message}"
-    exit(EXIT_CODE_FAILURE)
   end
 
   event_json = JSON.generate(event)

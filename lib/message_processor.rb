@@ -5,8 +5,6 @@ require 'json'
 
 require 'bunny'
 
-require_relative 'domains'
-
 class MessageProcessor
   def initialize(db)
     @started = false

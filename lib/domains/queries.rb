@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative '../errors'
-
 module Domains
   module Queries
     def self.by_fqdn(db, fqdn)
