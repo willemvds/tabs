@@ -19,7 +19,9 @@ class MessageProcessor
 
     channel = @connection.create_channel
     queue_name = 'https'
-    queue = channel.queue(queue_name, durable: true, arguments: { 'x-queue-type' => 'quorum' })
+    queue = channel.queue(queue_name,
+                          durable: true,
+                          arguments: { RabbitMq::QUEUE_TYPE_KEY => RabbitMq::QUEUE_TYPE_QUORUM })
 
     Thread.new do
       queue.subscribe(manual_ack: true, block: true) do |delivery_info, _properties, body|
