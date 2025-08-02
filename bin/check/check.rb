@@ -13,9 +13,6 @@ require 'uuid7'
 
 require_relative '../../autoloader'
 
-# require_relative '../../lib/check'
-# require_relative '../../lib/rabbit_mq'
-
 EXIT_CODE_USAGE = 1
 EXIT_CODE_FAILURE = 2
 
