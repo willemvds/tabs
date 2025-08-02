@@ -8,6 +8,7 @@ require 'uri'
 
 require 'bunny'
 require 'subprocess'
+require 'toml-rb'
 require 'uuid7'
 
 require_relative '../../lib/check'
@@ -21,6 +22,19 @@ args = ARGV
 if args.length != 1
   puts 'Usage: check <domain.lst>'
   exit(EXIT_CODE_USAGE)
+end
+
+DEFAULT_QUEUE_NAME = 'https'
+config = {
+  queue_name: DEFAULT_QUEUE_NAME
+}
+
+begin
+  local_config = TomlRB.load_file(
+    File.join(File.dirname(__FILE__), 'check.toml'), symbolize_keys: true
+  )
+  config = config.merge(local_config)
+rescue StandardError => e
 end
 
 domains_path = args[0]

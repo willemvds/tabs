@@ -13,3 +13,5 @@ gem 'subprocess', '~> 1.5'
 gem 'uuid7', '~> 0.2'
 
 gem 'rubocop', '~> 1.78', group: :development
+
+gem 'toml-rb', '~> 4.0'

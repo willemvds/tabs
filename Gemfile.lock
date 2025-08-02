@@ -38,6 +38,7 @@ GEM
     bunny (2.24.0)
       amq-protocol (~> 2.3)
       sorted_set (~> 1, >= 1.0.2)
+    citrus (3.0.2)
     console (1.31.0)
       fiber-annotation
       fiber-local (~> 1.1)
@@ -122,6 +123,9 @@ GEM
       set (~> 1.0)
     sqlite3 (2.6.0-x86_64-linux-gnu)
     subprocess (1.5.7)
+    toml-rb (4.0.0)
+      citrus (~> 3.0, > 3.0)
+      racc (~> 1.7)
     traces (0.15.2)
     unicode-display_width (3.1.4)
       unicode-emoji (~> 4.0, >= 4.0.4)
@@ -143,6 +147,7 @@ DEPENDENCIES
   rubocop (~> 1.78)
   sqlite3 (~> 2.6)
   subprocess (~> 1.5)
+  toml-rb (~> 4.0)
   uuid7 (~> 0.2)
 
 BUNDLED WITH
