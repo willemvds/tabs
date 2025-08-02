@@ -11,6 +11,7 @@ require 'subprocess'
 require 'uuid7'
 
 require_relative '../../lib/check'
+require_relative '../../lib/rabbitmq'
 
 EXIT_CODE_USAGE = 1
 EXIT_CODE_FAILURE = 2
@@ -30,6 +31,9 @@ connection = Bunny.new
 connection.start
 channel = connection.create_channel
 queue_name = 'https'
+queue = channel.queue(queue_name,
+                      durable: true,
+                      arguments: { RabbitMQ::QUEUE_TYPE_KEY => RabbitMQ::QUEUE_TYPE_QUORUM })
 
 domains.each do |fqdn|
   begin
@@ -42,6 +46,5 @@ domains.each do |fqdn|
   event_json = JSON.generate(event)
   puts event_json
 
-  queue = channel.queue(queue_name, durable: true, arguments: { 'x-queue-type' => 'quorum' })
   puts channel.default_exchange.publish(event_json, routing_key: queue.name)
 end
