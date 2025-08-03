@@ -1,0 +1,14 @@
+[Unit]
+Description=Tabs (Falcon)
+
+[Service]
+Type=simple
+User=tabs
+Group=www-data
+WorkingDirectory=/home/tabs/tabs/bin
+ExecStart=/home/tabs/tabs/bin/falcon.sh
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
