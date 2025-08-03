@@ -132,7 +132,7 @@ GEM
     unicode-emoji (4.0.4)
     uuid7 (0.2.0)
       zeitwerk (~> 2.4)
-    zeitwerk (2.7.3)
+    zeitwerk (2.6.18)
 
 PLATFORMS
   x86_64-linux
@@ -149,7 +149,7 @@ DEPENDENCIES
   subprocess (~> 1.5)
   toml-rb (~> 4.0)
   uuid7 (~> 0.2)
-  zeitwerk (~> 2.7)
+  zeitwerk (~> 2.6.17)
 
 BUNDLED WITH
    2.6.9
