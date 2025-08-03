@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'zeitwerk'
+
 ROOT_DIR = File.dirname(__FILE__).freeze
 
 loader = Zeitwerk::Loader.new

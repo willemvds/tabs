@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative '../../autoloader'
+
 require 'date'
 require 'json'
 require 'net/http'
@@ -10,8 +12,6 @@ require 'bunny'
 require 'subprocess'
 require 'toml-rb'
 require 'uuid7'
-
-require_relative '../../autoloader'
 
 EXIT_CODE_USAGE = 1
 EXIT_CODE_FAILURE = 2
@@ -30,7 +30,7 @@ config = {
 
 begin
   local_config = TomlRB.load_file(
-    File.join(File.dirname(__FILE__), 'check.toml'), symbolize_keys: true
+    File.join(ROOT_DIR, 'bin/check/check.toml'), symbolize_keys: true
   )
   config.merge(local_config)
 rescue StandardError => e

@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-require 'sqlite3'
-require 'zeitwerk'
-
 require_relative '../autoloader'
+
+require 'sqlite3'
 
 DEFAULT_QUEUE_NAME = 'https'
 config = {
