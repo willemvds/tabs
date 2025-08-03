@@ -1,9 +1,9 @@
 # tabs
 That's A Bad Sign keeps tabs on your website so you know if things are still OK.
 
-# Web Server
+### Web Server
 ```bundle exec falcon host bin/falcon.rb```
 
-# Check
+### Check
 ```bin/check/check.sh path-to-domains.lst```
 
