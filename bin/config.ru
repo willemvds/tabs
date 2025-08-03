@@ -5,14 +5,28 @@ require 'zeitwerk'
 
 require_relative '../autoloader'
 
-DB_PATH = File.join(ROOT_DIR, 'storage/tabs.db')
+DEFAULT_QUEUE_NAME = 'https'
+config = {
+  queue_name: DEFAULT_QUEUE_NAME,
+  db_path: File.join(ROOT_DIR, 'storage/tabs.db')
+}
 
 begin
-  db = SQLite3::Database.new(DB_PATH)
+  local_config = TomlRB.load_file(
+    File.join(ROOT_DIR, 'storage/tabs.toml'), symbolize_keys: true
+  )
+  config.merge(local_config)
+rescue StandardError
+end
+
+# DB_PATH = File.join(ROOT_DIR, 'storage/tabs.db')
+
+begin
+  db = SQLite3::Database.new(config[:db_path])
   mp = MessageProcessor.new(db)
   mp.start
 
-  run Web::Main.new(DB_PATH)
+  run Web::Main.new(config)
 rescue Interrupt => e
   puts "Interrupted #{e}"
   mp.stop

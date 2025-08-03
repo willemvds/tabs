@@ -7,12 +7,12 @@ require 'rack'
 
 module Web
   class Main
-    def initialize(db_path)
+    def initialize(config)
       @logger = Ougai::Logger.new($stdout)
-      @db_path = db_path
+      @db_path = config[:db_path]
       @index_template = ERB.new(File.read(File.join(File.dirname(__FILE__), 'templates/index.rhtml')))
 
-      db = SQLite3::Database.new(db_path)
+      db = SQLite3::Database.new(@db_path)
       Users::Commands.create_tables!(db)
       Domains::Commands.create_tables!(db)
     end
