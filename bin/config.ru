@@ -22,7 +22,7 @@ end
 
 begin
   db = SQLite3::Database.new(config[:db_path])
-  mp = MessageProcessor.new(db)
+  mp = Tabs::MessageProcessor.new(db)
   mp.start
 
   run Web::Main.new(config)

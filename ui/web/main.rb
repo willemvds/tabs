@@ -13,8 +13,8 @@ module Web
       @index_template = ERB.new(File.read(File.join(File.dirname(__FILE__), 'templates/index.rhtml')))
 
       db = SQLite3::Database.new(@db_path)
-      Users::Commands.create_tables!(db)
-      Domains::Commands.create_tables!(db)
+      Tabs::Users::Commands.create_tables!(db)
+      Tabs::Domains::Commands.create_tables!(db)
     end
 
     def call(env)
@@ -47,7 +47,7 @@ module Web
 
     def index(_req)
       db = SQLite3::Database.new(@db_path)
-      statuses = Domains::Queries.most_recent_statuses(db)
+      statuses = Tabs::Domains::Queries.most_recent_statuses(db)
 
       statuses.each do |status|
         @logger.debug({

@@ -50,8 +50,8 @@ queue = channel.queue(queue_name,
 
 domains.each do |fqdn|
   begin
-    event = Check.domain fqdn
-  rescue Check::Bad => e
+    event = Tabs::Check.domain fqdn
+  rescue Tabs::Check::Bad => e
     puts "check domain err=#{e.message}"
   end
 

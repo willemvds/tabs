@@ -1,4 +1,6 @@
 # frozen_string_literal: true
 
-module Domains
+module Tabs
+  module Domains
+  end
 end

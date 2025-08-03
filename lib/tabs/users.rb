@@ -1,4 +1,6 @@
 # frozen_string_literal: true
 
-module Users
+module Tabs
+  module Users
+  end
 end
