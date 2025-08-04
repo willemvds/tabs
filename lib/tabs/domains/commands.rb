@@ -7,7 +7,11 @@ require 'hashdiff'
 module Tabs
   module Domains
     module Commands
+      VALID_FQDN_REGEX = /.+\..+/
+
       def self.create!(db, fqdn)
+        raise Errors::ValidationFailed, 'fqdn is not valid' unless fqdn.to_s.match(VALID_FQDN_REGEX)
+
         create_query = "
         INSERT INTO
           domains (fqdn, created_at)

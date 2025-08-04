@@ -4,6 +4,7 @@ require 'erb'
 
 require 'ougai'
 require 'rack'
+require 'sqlite3'
 
 module Web
   class Main

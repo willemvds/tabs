@@ -7,5 +7,8 @@ module Tabs
 
     class EntityExists < StandardError
     end
+
+    class ValidationFailed < StandardError
+    end
   end
 end
