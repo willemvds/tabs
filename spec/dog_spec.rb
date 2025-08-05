@@ -1,5 +1,3 @@
-EXIT_CODE_SUCCESS = 0
-
 RSpec.describe Dog do
   context '.ips' do
     it 'returns the ip printed by the dog binary' do
