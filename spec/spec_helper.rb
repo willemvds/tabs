@@ -16,7 +16,20 @@
 
 require_relative '../autoloader'
 
+require 'fileutils'
+
+TEST_SCRATCH_DIR = File.join(File.dirname(__FILE__), 'scratch')
+
+Dir[File.join(ROOT_DIR, 'spec/support/**/*.rb')].each { |f| require f }
+
 RSpec.configure do |config|
+  config.before(:suite) do
+    FileUtils.mkdir_p(TEST_SCRATCH_DIR)
+  end
+
+  config.after(:suite) do
+    FileUtils.rm_rf(TEST_SCRATCH_DIR)
+  end
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
