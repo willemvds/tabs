@@ -7,9 +7,9 @@ require 'bunny'
 
 module Tabs
   class MessageProcessor
-    def initialize(db)
+    def initialize(&process_block)
+      @process_block = process_block
       @started = false
-      @db = db
     end
 
     def start
@@ -29,7 +29,7 @@ module Tabs
           puts "delivery info #{delivery_info}"
           puts "properties #{_properties}"
           puts "body #{body}"
-          msg = JSON.parse(body)
+          msg = JSON.parse(body, symbolize_names: true)
           process(msg)
           channel.acknowledge(delivery_info.delivery_tag, false)
         end
@@ -43,22 +43,22 @@ module Tabs
     end
 
     def process(msg)
-      fqdn = msg.fetch('fqdn')
-      cert = msg.fetch('cert')
-      response = msg.fetch('response')
-      ips = msg.fetch('ips').sort!
+      fqdn = msg.fetch(:fqdn)
+      cert = msg.fetch(:cert)
+      response = msg.fetch(:response)
+      ips = msg.fetch(:ips).sort!
       ip = ips.first
       fields = {
         ip: ip,
-        is_online: response.fetch('code').to_i == 200,
-        cert_issuer: cert.fetch('issuer'),
-        cert_subject: cert.fetch('subject'),
-        cert_serial: cert.fetch('serial'),
-        cert_not_before: DateTime.parse(cert.fetch('not_before')),
-        cert_not_after: DateTime.parse(cert.fetch('not_after')),
-        response_body_length: response.fetch('body_length')
+        is_online: response.fetch(:code).to_i == Http::STATUS_OK,
+        cert_issuer: cert.fetch(:issuer),
+        cert_subject: cert.fetch(:subject),
+        cert_serial: cert.fetch(:serial),
+        cert_not_before: DateTime.parse(cert.fetch(:not_before)),
+        cert_not_after: DateTime.parse(cert.fetch(:not_after)),
+        response_body_length: response.fetch(:body_length)
       }
-      Domains::Commands.update_status!(@db, fqdn, fields)
+      @process_block.call(fqdn, fields)
     end
   end
 end

@@ -22,7 +22,9 @@ end
 
 begin
   db = SQLite3::Database.new(config[:db_path])
-  mp = Tabs::MessageProcessor.new(db)
+  mp = Tabs::MessageProcessor.new do |fqdn, updates|
+    Tabs::Domains::Commands.update_status! db, fqdn, updates
+  end
   mp.start
 
   run Web::Main.new(config)
