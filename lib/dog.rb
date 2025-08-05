@@ -6,10 +6,8 @@ module Dog
   DEFAULT_BINARY_PATH = 'dog'
   private_constant :DEFAULT_BINARY_PATH
 
-  EXIT_CODE_NO_RESULTS = 2
-  EXIT_CODE_INVALID_QUERY = 3
-  private_constant :EXIT_CODE_NO_RESULTS
-  private_constant :EXIT_CODE_INVALID_QUERY
+  EXITCODE_NO_RESULTS = 2
+  EXITCODE_INVALID_QUERY = 3
 
   class BinaryUnavailable < StandardError
   end
@@ -32,9 +30,9 @@ module Dog
       return ips
     end
 
-    raise InvalidFQDN if status.exitstatus == EXIT_CODE_INVALID_QUERY
+    raise InvalidFQDN if status.exitstatus == EXITCODE_INVALID_QUERY
 
-    raise NoResults if status.exitstatus == EXIT_CODE_NO_RESULTS
+    raise NoResults if status.exitstatus == EXITCODE_NO_RESULTS
 
     raise StandardError, "Unexpected dog error: exit code=#{status.exitstatus}, stderr=#{stderr}"
   end

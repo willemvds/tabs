@@ -15,13 +15,13 @@ RSpec.describe Dog do
     end
 
     it 'raises if the fqdn is not valid' do
-      fakedog = FakeCLI.err(exitcode: 3)
+      fakedog = FakeCLI.err(exitcode: Dog::EXITCODE_INVALID_QUERY)
 
       expect { Dog.ips('', fakedog) }.to raise_error Dog::InvalidFQDN
     end
 
     it 'raises if there are no results' do
-      fakedog = FakeCLI.err(exitcode: 2)
+      fakedog = FakeCLI.err(exitcode: Dog::EXITCODE_NO_RESULTS)
 
       expect { Dog.ips('', fakedog) }.to raise_error Dog::NoResults
     end

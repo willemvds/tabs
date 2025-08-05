@@ -2,8 +2,6 @@ require 'fileutils'
 require 'securerandom'
 
 module FakeCLI
-  EXITCODE_OK = 0
-
   def self.make(exitcode:, stdout:, stderr:)
     random_hex_name = SecureRandom.hex(20)
     fakecli = File.join(TEST_SCRATCH_DIR, "#{random_hex_name}.sh")
@@ -14,7 +12,7 @@ module FakeCLI
   end
 
   def self.ok(stdout: '', stderr: '')
-    FakeCLI.make(exitcode: EXITCODE_OK, stdout:, stderr:)
+    FakeCLI.make(exitcode: ExitCode::OK, stdout:, stderr:)
   end
 
   def self.err(exitcode:, stdout: '', stderr: '')
