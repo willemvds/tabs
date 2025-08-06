@@ -3,7 +3,7 @@
 require 'open3'
 
 module Dig
-  DEFAULT_BINARY_PATH = 'dig'
+  DEFAULT_BINARY_PATH = 'dig'.freeze
   private_constant :DEFAULT_BINARY_PATH
 
   class Error < StandardError

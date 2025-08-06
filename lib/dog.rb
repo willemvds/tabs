@@ -3,7 +3,7 @@
 require 'open3'
 
 module Dog
-  DEFAULT_BINARY_PATH = 'dog'
+  DEFAULT_BINARY_PATH = 'dog'.freeze
   private_constant :DEFAULT_BINARY_PATH
 
   EXITCODE_NO_RESULTS = 2
