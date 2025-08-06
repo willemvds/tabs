@@ -29,7 +29,7 @@ RSpec.describe Dog do
       stderr = 'Got 199 problems'
       fakedog = FakeCLI.err(exitcode:, stderr:)
 
-      expect { Dog.ips('', fakedog) }.to raise_error StandardError, /#{stderr}/
+      expect { Dog.ips('', fakedog) }.to raise_error Dog::Error, /#{stderr}/
     end
   end
 end

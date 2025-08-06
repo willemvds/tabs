@@ -9,13 +9,16 @@ module Dog
   EXITCODE_NO_RESULTS = 2
   EXITCODE_INVALID_QUERY = 3
 
-  class BinaryUnavailable < StandardError
+  class Error < StandardError
   end
 
-  class InvalidFQDN < StandardError
+  class BinaryUnavailable < Error
   end
 
-  class NoResults < StandardError
+  class InvalidFQDN < Error
+  end
+
+  class NoResults < Error
   end
 
   def self.ips(fqdn, binary_path = 'dog')
@@ -34,6 +37,6 @@ module Dog
 
     raise NoResults if status.exitstatus == EXITCODE_NO_RESULTS
 
-    raise StandardError, "Unexpected dog error: exit code=#{status.exitstatus}, stderr=#{stderr}"
+    raise Error, "Unexpected dog error: exit code=#{status.exitstatus}, stderr=#{stderr}"
   end
 end
