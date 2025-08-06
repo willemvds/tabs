@@ -21,9 +21,9 @@ RSpec.describe Dig do
     it 'raises if there is an unknown exit code' do
       exitcode = 222
       stderr = 'NEVER SEEN THIS BEFORE'
-      fakedog = FakeCLI.err(exitcode:, stderr:)
+      fakedig = FakeCLI.err(exitcode:, stderr:)
 
-      expect { Dig.ips('', fakedog) }.to raise_error Dig::Error, /#{stderr}/
+      expect { Dig.ips('', fakedig) }.to raise_error Dig::Error, /#{stderr}/
     end
   end
 end
