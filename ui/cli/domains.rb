@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-require 'sqlite3'
+require "sqlite3"
 
 module Cli
   module Domains
     def self.main(args)
       if args.length < 2
-        puts 'Usage: tabs domains add <fqdn>'
+        puts "Usage: tabs domains add <fqdn>"
         exit(EXITCODE_USAGE)
       end
 
-      db_path = File.join(ROOT_DIR, 'storage/tabs.db')
+      db_path = File.join(ROOT_DIR, "storage/tabs.db")
       db = SQLite3::Database.new(db_path)
 
       args[0]

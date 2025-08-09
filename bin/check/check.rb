@@ -1,35 +1,35 @@
 # frozen_string_literal: true
 
-require_relative '../../autoloader'
+require_relative "../../autoloader"
 
-require 'date'
-require 'json'
-require 'net/http'
-require 'openssl'
-require 'uri'
+require "date"
+require "json"
+require "net/http"
+require "openssl"
+require "uri"
 
-require 'bunny'
-require 'subprocess'
-require 'toml-rb'
-require 'uuid7'
+require "bunny"
+require "subprocess"
+require "toml-rb"
+require "uuid7"
 
 EXIT_CODE_USAGE = 1
 EXIT_CODE_FAILURE = 2
 
 args = ARGV
 if args.length != 1
-  puts 'Usage: check <domain.lst>'
+  puts "Usage: check <domain.lst>"
   exit(EXIT_CODE_USAGE)
 end
 
-DEFAULT_QUEUE_NAME = 'https'
+DEFAULT_QUEUE_NAME = "https"
 config = {
-  queue_name: DEFAULT_QUEUE_NAME
+  queue_name: DEFAULT_QUEUE_NAME,
 }
 
 begin
   local_config = TomlRB.load_file(
-    File.join(ROOT_DIR, 'bin/check/check.toml'), symbolize_keys: true
+    File.join(ROOT_DIR, "bin/check/check.toml"), symbolize_keys: true
   )
   config.merge(local_config)
 rescue StandardError => e
@@ -42,14 +42,16 @@ domains = domains.select { |domain| domain.length > 0 }
 connection = Bunny.new
 connection.start
 channel = connection.create_channel
-queue_name = 'https'
-queue = channel.queue(queue_name,
-                      durable: true,
-                      arguments: { RabbitMq::QUEUE_TYPE_KEY => RabbitMq::QUEUE_TYPE_QUORUM })
+queue_name = "https"
+queue = channel.queue(
+  queue_name,
+  durable: true,
+  arguments: { RabbitMq::QUEUE_TYPE_KEY => RabbitMq::QUEUE_TYPE_QUORUM },
+)
 
 domains.each do |fqdn|
   begin
-    event = Tabs::Check.domain fqdn
+    event = Tabs::Check.domain(fqdn)
   rescue Tabs::Check::Bad => e
     puts "check domain err=#{e.message}"
   end

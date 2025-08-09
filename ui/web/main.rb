@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-require 'erb'
+require "erb"
 
-require 'ougai'
-require 'rack'
-require 'sqlite3'
+require "ougai"
+require "rack"
+require "sqlite3"
 
 module Web
   class Main
     def initialize(config)
       @logger = Ougai::Logger.new($stdout)
       @db_path = config[:db_path]
-      @index_template = ERB.new(File.read(File.join(File.dirname(__FILE__), 'templates/index.rhtml')))
+      @index_template = ERB.new(File.read(File.join(File.dirname(__FILE__), "templates/index.rhtml")))
 
       @db = SQLite3::Database.new(@db_path)
       Tabs::Users::Commands.create_tables!(@db)
@@ -21,16 +21,16 @@ module Web
     def call(env)
       req = Rack::Request.new(env)
       @logger.debug({
-                      msg: 'Request Received',
-                      method: req.request_method,
-                      path: req.path_info
-                    })
+        msg: "Request Received",
+        method: req.request_method,
+        path: req.path_info,
+      })
 
       case req.path_info
-      when '/'
+      when "/"
         index(req)
       else
-        [Http::STATUS_NOT_FOUND, {}, ['Not Found']]
+        [Http::STATUS_NOT_FOUND, {}, ["Not Found"]]
       end
     end
 
@@ -51,14 +51,14 @@ module Web
 
       statuses.each do |status|
         @logger.debug({
-                        msg: 'Domain Status',
-                        status: status.inspect
-                      })
+          msg: "Domain Status",
+          status: status.inspect,
+        })
       end
 
       ic = IndexContext.new(statuses)
       body = @index_template.result(ic.get_binding)
-      [Http::STATUS_OK, { "Content-Type": 'text/html; charset=utf-8' }, [body]]
+      [Http::STATUS_OK, { "Content-Type": "text/html; charset=utf-8" }, [body]]
     end
   end
 end

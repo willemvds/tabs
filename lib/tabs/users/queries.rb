@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'date'
+require "date"
 
 module Tabs
   module Users
@@ -27,7 +27,7 @@ module Tabs
             row[1],
             row[2],
             row[3],
-            row[4]
+            row[4],
           )
         end
       end
@@ -35,10 +35,10 @@ module Tabs
       def self.root
         User.new(
           ROOT_ID,
-          'root',
+          "root",
           User::ACTIVE,
           DateTime.now,
-          ROOT_ID
+          ROOT_ID,
         )
       end
 
@@ -67,7 +67,7 @@ module Tabs
           row[1],
           row[2],
           row[3],
-          row[4]
+          row[4],
         )
       end
     end

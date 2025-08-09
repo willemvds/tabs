@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'date'
+require "date"
 
 module Tabs
   module Users
@@ -24,12 +24,12 @@ module Tabs
         begin
           db.transaction
           db.execute(create_user_query, [
-                       username,
-                       User::ACTIVE,
-                       created_by.id,
-                       created_at.to_s
-                     ])
-          rows = db.execute('SELECT last_insert_rowid()')
+            username,
+            User::ACTIVE,
+            created_by.id,
+            created_at.to_s,
+          ])
+          rows = db.execute("SELECT last_insert_rowid()")
           db.commit
         rescue SQLite3::ConstraintException
           db.rollback
@@ -46,7 +46,7 @@ module Tabs
           User::ACTIVE,
           username,
           created_by.id,
-          created_at
+          created_at,
         )
       end
 
@@ -62,7 +62,7 @@ module Tabs
         )
       "
 
-        db.execute create_users_query
+        db.execute(create_users_query)
       end
     end
   end

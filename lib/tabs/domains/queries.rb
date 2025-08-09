@@ -56,7 +56,7 @@ module Tabs
           cert_not_before: DateTime.parse(row[6]),
           cert_not_after: DateTime.parse(row[7]),
           response_body_length: row[8],
-          created_at: row[9]
+          created_at: row[9],
         }
         Status.new(fqdn, fields)
       end
@@ -101,7 +101,7 @@ module Tabs
             cert_not_before: DateTime.parse(row[6]),
             cert_not_after: DateTime.parse(row[7]),
             response_body_length: row[8],
-            created_at: row[9]
+            created_at: row[9],
           }
           Status.new(row[0], fields)
         end

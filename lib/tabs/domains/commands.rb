@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'date'
+require "date"
 
-require 'hashdiff'
+require "hashdiff"
 
 module Tabs
   module Domains
@@ -10,7 +10,7 @@ module Tabs
       VALID_FQDN_REGEX = /.+\..+/
 
       def self.create!(db, fqdn)
-        raise Errors::ValidationFailed, 'fqdn is not valid' unless fqdn.to_s.match(VALID_FQDN_REGEX)
+        raise Errors::ValidationFailed, "fqdn is not valid" unless fqdn.to_s.match(VALID_FQDN_REGEX)
 
         create_query = "
         INSERT INTO
@@ -28,15 +28,15 @@ module Tabs
         Domain.new(fqdn, created_at)
       end
 
-      UPDATE_DIFF_FIELDS = %i[
-        ip
-        is_online
-        cert_issuer
-        cert_subject
-        cert_serial
-        cert_not_before
-        cert_not_after
-        response_body_length
+      UPDATE_DIFF_FIELDS = [
+        :ip,
+        :is_online,
+        :cert_issuer,
+        :cert_subject,
+        :cert_serial,
+        :cert_not_before,
+        :cert_not_after,
+        :response_body_length,
       ].freeze
 
       def self.update_status!(db, fqdn, new_fields)
@@ -50,7 +50,7 @@ module Tabs
             cert_serial: current.cert_serial,
             cert_not_before: current.cert_not_before,
             cert_not_after: current.cert_not_after,
-            response_body_length: current.response_body_length
+            response_body_length: current.response_body_length,
           }
         rescue Errors::NotFound
           old_fields = {}
@@ -82,7 +82,7 @@ module Tabs
 
         new_values = UPDATE_DIFF_FIELDS.map do |field|
           v = new_fields.fetch(field)
-          v = v.to_s if %i[cert_not_before cert_not_after].include?(field)
+          v = v.to_s if [:cert_not_before, :cert_not_after].include?(field)
           if field == :is_online
             v = v ? Status::ONLINE : Status::OFFLINE
           end

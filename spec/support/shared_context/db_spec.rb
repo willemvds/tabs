@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'fileutils'
-require 'securerandom'
-require 'sqlite3'
+require "fileutils"
+require "securerandom"
+require "sqlite3"
 
-RSpec.shared_context 'db' do
+RSpec.shared_context("db") do
   # TODO(@willemvds): Make the test suite build a fresh db on start and then just copy the file for each test.
   before do
     random_hex_name = SecureRandom.hex(20)
@@ -18,6 +18,6 @@ RSpec.shared_context 'db' do
   end
 
   after do
-    FileUtils.rm @test_db_path
+    FileUtils.rm(@test_db_path)
   end
 end

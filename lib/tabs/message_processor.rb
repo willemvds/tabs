@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'date'
-require 'json'
+require "date"
+require "json"
 
-require 'bunny'
+require "bunny"
 
 module Tabs
   class MessageProcessor
@@ -19,10 +19,12 @@ module Tabs
       @connection.start
 
       channel = @connection.create_channel
-      queue_name = 'https'
-      queue = channel.queue(queue_name,
-                            durable: true,
-                            arguments: { RabbitMq::QUEUE_TYPE_KEY => RabbitMq::QUEUE_TYPE_QUORUM })
+      queue_name = "https"
+      queue = channel.queue(
+        queue_name,
+        durable: true,
+        arguments: { RabbitMq::QUEUE_TYPE_KEY => RabbitMq::QUEUE_TYPE_QUORUM },
+      )
 
       Thread.new do
         queue.subscribe(manual_ack: true, block: true) do |delivery_info, _properties, body|
@@ -56,7 +58,7 @@ module Tabs
         cert_serial: cert.fetch(:serial),
         cert_not_before: DateTime.parse(cert.fetch(:not_before)),
         cert_not_after: DateTime.parse(cert.fetch(:not_after)),
-        response_body_length: response.fetch(:body_length)
+        response_body_length: response.fetch(:body_length),
       }
       @process_block.call(fqdn, fields)
     end

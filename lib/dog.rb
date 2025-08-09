@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'open3'
+require "open3"
 
 module Dog
-  DEFAULT_BINARY_PATH = 'dog'.freeze
+  DEFAULT_BINARY_PATH = "dog"
   private_constant :DEFAULT_BINARY_PATH
 
   EXITCODE_NO_RESULTS = 2
@@ -21,9 +21,9 @@ module Dog
   class NoResults < Error
   end
 
-  def self.ips(fqdn, binary_path = 'dog')
+  def self.ips(fqdn, binary_path = "dog")
     begin
-      stdout, stderr, status = Open3.capture3(binary_path, '-1', fqdn)
+      stdout, stderr, status = Open3.capture3(binary_path, "-1", fqdn)
     rescue SystemCallError => e
       raise BinaryUnavailable, e
     end
