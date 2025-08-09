@@ -13,7 +13,7 @@ gem "sqlite3", "~> 2.6"
 gem "subprocess", "~> 1.5"
 gem "toml-rb", "~> 4.0"
 gem "uuid7", "~> 0.2"
-gem "zeitwerk", "~> 2.6.17"
+gem "zeitwerk", "~> 2.6"
 
 group :development do
   gem "rubocop", "~> 1.78", require: false

@@ -167,7 +167,7 @@ DEPENDENCIES
   subprocess (~> 1.5)
   toml-rb (~> 4.0)
   uuid7 (~> 0.2)
-  zeitwerk (~> 2.6.17)
+  zeitwerk (~> 2.6)
 
 BUNDLED WITH
    2.6.9
