@@ -17,7 +17,6 @@ EXIT_CODE_USAGE = 1
 EXIT_CODE_FAILURE = 2
 
 args = ARGV
-
 if args.length != 1
   puts 'Usage: check <domain.lst>'
   exit(EXIT_CODE_USAGE)
