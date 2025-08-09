@@ -21,6 +21,9 @@ module Cli
       rescue Tabs::Errors::EntityExists
         puts "#{fqdn} already exists."
         exit(EXITCODE_ERROR)
+      rescue Tabs::Errors::ValidationFailed
+        puts "#{fqdn} is not a valid FQDN."
+        exit(EXITCODE_ERROR)
       end
     end
   end
