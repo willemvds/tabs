@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
-cd $TABS_ROOT
+SCRIPT_FULL_PATH="$(realpath "${BASH_SOURCE[0]:-$0}")"
+SCRIPT_DIR="$(dirname "${SCRIPT_FULL_PATH}")"
+cd "$SCRIPT_DIR/../.."
+eval "$(rbenv init -)"
+
 bundle exec ruby bin/check/check.rb "$@"
 

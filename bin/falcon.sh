@@ -2,10 +2,8 @@
 
 SCRIPT_FULL_PATH="$(realpath "${BASH_SOURCE[0]:-$0}")"
 SCRIPT_DIR="$(dirname "${SCRIPT_FULL_PATH}")"
-cd "$SCRIPT_DIR/../.."
+cd "$SCRIPT_DIR/.."
 eval "$(rbenv init -)"
 
-DATE=$(date +"%Y%m%d")
-
-bin/check/check.sh storage/domains.lst >> storage/logs/check.$DATE.log
+bundle exec falcon host bin/falcon.rb
 
