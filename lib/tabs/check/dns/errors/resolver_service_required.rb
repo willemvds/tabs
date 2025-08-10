@@ -6,6 +6,7 @@ module Tabs
       module Errors
         class ResolverServiceRequired < StandardError
         end
-      end end
+      end
+    end
   end
 end
