@@ -46,7 +46,7 @@ queue_name = "https"
 queue = channel.queue(
   queue_name,
   durable: true,
-  arguments: { RabbitMq::QUEUE_TYPE_KEY => RabbitMq::QUEUE_TYPE_QUORUM },
+  arguments: { RabbitMQ::QUEUE_TYPE_KEY => RabbitMQ::QUEUE_TYPE_QUORUM },
 )
 
 domains.each do |fqdn|

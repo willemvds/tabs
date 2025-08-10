@@ -6,9 +6,11 @@ ROOT_DIR = File.dirname(__FILE__).freeze
 
 loader = Zeitwerk::Loader.new
 
-# This is copied from official docs but does not work in current form.
 loader.inflector.inflect(
-  "rabbit_mq": "RabbitMQ",
+  "dns" => "DNS",
+  "invalid_fqdn" => "InvalidFQDN",
+  "http" => "HTTP",
+  "rabbit_mq" => "RabbitMQ",
 )
 
 loader.push_dir(File.join(ROOT_DIR, "lib"))

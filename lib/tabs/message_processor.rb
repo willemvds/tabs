@@ -23,7 +23,7 @@ module Tabs
       queue = channel.queue(
         queue_name,
         durable: true,
-        arguments: { RabbitMq::QUEUE_TYPE_KEY => RabbitMq::QUEUE_TYPE_QUORUM },
+        arguments: { RabbitMQ::QUEUE_TYPE_KEY => RabbitMQ::QUEUE_TYPE_QUORUM },
       )
 
       Thread.new do
@@ -52,7 +52,7 @@ module Tabs
       ip = ips.first
       fields = {
         ip: ip,
-        is_online: response.fetch(:code).to_i == Http::STATUS_OK,
+        is_online: response.fetch(:code).to_i == HTTP::STATUS_OK,
         cert_issuer: cert.fetch(:issuer),
         cert_subject: cert.fetch(:subject),
         cert_serial: cert.fetch(:serial),

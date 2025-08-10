@@ -30,7 +30,7 @@ module Web
       when "/"
         index(req)
       else
-        [Http::STATUS_NOT_FOUND, {}, ["Not Found"]]
+        [HTTP::STATUS_NOT_FOUND, {}, ["Not Found"]]
       end
     end
 
@@ -58,7 +58,7 @@ module Web
 
       ic = IndexContext.new(statuses)
       body = @index_template.result(ic.get_binding)
-      [Http::STATUS_OK, { "Content-Type": "text/html; charset=utf-8" }, [body]]
+      [HTTP::STATUS_OK, { "Content-Type": "text/html; charset=utf-8" }, [body]]
     end
   end
 end

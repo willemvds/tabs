@@ -5,7 +5,7 @@
 #
 # Will all caps name when we figure out zeitwerk.
 #
-module Http
+module HTTP
   # 2xx - Successful responses
   STATUS_OK = 200
 
