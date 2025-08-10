@@ -29,8 +29,6 @@ require "fileutils"
 
 TEST_SCRATCH_DIR = File.join(File.dirname(__FILE__), "scratch")
 
-Dir[File.join(ROOT_DIR, "spec/support/**/*.rb")].each { |f| require f }
-
 RSpec.configure do |config|
   config.before(:suite) do
     FileUtils.mkdir_p(TEST_SCRATCH_DIR)
