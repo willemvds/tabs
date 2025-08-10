@@ -7,9 +7,6 @@ require "uri"
 
 module Tabs
   module Check
-    class Bad < StandardError
-    end
-
     def self.domain(fqdn)
       ips = DNS.addresses(fqdn)
 
