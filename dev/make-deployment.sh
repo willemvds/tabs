@@ -16,5 +16,5 @@ if [ -n "$INCLUDE_VENDOR" ]; then
     INCLUDE_VENDOR="vendor/ruby/3.4.0"
 fi
 
-tar cvz -f tabs-$1.tar.xz bin/ lib/ ui/ .bundle/ $INCLUDE_VENDOR .ruby-version autoloader.rb Gemfile Gemfile.lock LICENSE README.md
+tar cvz -f deployments/tabs-$1.tar.xz bin/ lib/ ui/ .bundle/ $INCLUDE_VENDOR .ruby-version autoloader.rb Gemfile Gemfile.lock LICENSE README.md
 
