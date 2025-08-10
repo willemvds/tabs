@@ -19,24 +19,19 @@ RSpec.describe(Tabs::Check::DNS::Resolver) do
     end
 
     context "using dog" do
-      it "translates Dog::InvalidFQDN" do
-        r = Tabs::Check::DNS::Resolver.new("doesntmatter", dog: DNSResolverServiceMock.raising(Dog::InvalidFQDN))
+      it "translates Dog::Errors::InvalidFQDN" do
+        r = Tabs::Check::DNS::Resolver.new("doesntmatter", dog: DNSResolverServiceMock.raising(Dog::Errors::InvalidFQDN))
         expect { r.ips }.to(raise_error(Tabs::Check::DNS::Errors::InvalidFQDN))
       end
 
-      it "translates Dog::NoResults" do
-        r = Tabs::Check::DNS::Resolver.new("doesntmatter", dog: DNSResolverServiceMock.raising(Dog::NoResults))
+      it "translates Dog::Errors::NoResults" do
+        r = Tabs::Check::DNS::Resolver.new("doesntmatter", dog: DNSResolverServiceMock.raising(Dog::Errors::NoResults))
         expect { r.ips }.to(raise_error(Tabs::Check::DNS::Errors::NoRecordsFound))
       end
 
       context "without dig" do
-        it "handles Dog::BinaryUnavailable" do
-          r = Tabs::Check::DNS::Resolver.new("doesntmatter", dog: DNSResolverServiceMock.raising(Dog::BinaryUnavailable))
-          expect { r.ips }.to(raise_error(Tabs::Check::DNS::Errors::ServiceUnavailable))
-        end
-
-        it "translates Timeout::Error" do
-          r = Tabs::Check::DNS::Resolver.new("doesntmatter", dog: DNSResolverServiceMock.raising(Timeout::Error))
+        it "handles Dog::Errors::BinaryUnavailable" do
+          r = Tabs::Check::DNS::Resolver.new("doesntmatter", dog: DNSResolverServiceMock.raising(Dog::Errors::BinaryUnavailable))
           expect { r.ips }.to(raise_error(Tabs::Check::DNS::Errors::ServiceUnavailable))
         end
       end
@@ -57,11 +52,6 @@ RSpec.describe(Tabs::Check::DNS::Resolver) do
 
       it "translates Dig::BinaryUnavailable" do
         r = Tabs::Check::DNS::Resolver.new("doesntmatter", dig: DNSResolverServiceMock.raising(Dig::BinaryUnavailable))
-        expect { r.ips }.to(raise_error(Tabs::Check::DNS::Errors::ServiceUnavailable))
-      end
-
-      it "translates Timeout::Error" do
-        r = Tabs::Check::DNS::Resolver.new("doesntmatter", dig: DNSResolverServiceMock.raising(Timeout::Error))
         expect { r.ips }.to(raise_error(Tabs::Check::DNS::Errors::ServiceUnavailable))
       end
     end

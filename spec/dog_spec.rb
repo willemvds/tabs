@@ -11,19 +11,19 @@ RSpec.describe(Dog) do
     end
 
     it "raises if the binary could not be executed" do
-      expect { Dog.ips("doesntmatter", "thisbinarydoesnotexist") }.to(raise_error(Dog::BinaryUnavailable))
+      expect { Dog.ips("doesntmatter", "thisbinarydoesnotexist") }.to(raise_error(Dog::Errors::BinaryUnavailable))
     end
 
     it "raises if the fqdn is not valid" do
       fakedog = FakeCLI.err(exitcode: Dog::EXITCODE_INVALID_QUERY)
 
-      expect { Dog.ips("", fakedog) }.to(raise_error(Dog::InvalidFQDN))
+      expect { Dog.ips("", fakedog) }.to(raise_error(Dog::Errors::InvalidFQDN))
     end
 
     it "raises if there are no results" do
       fakedog = FakeCLI.err(exitcode: Dog::EXITCODE_NO_RESULTS)
 
-      expect { Dog.ips("", fakedog) }.to(raise_error(Dog::NoResults))
+      expect { Dog.ips("", fakedog) }.to(raise_error(Dog::Errors::NoResults))
     end
 
     it "raises if there is an unknown exit code" do
@@ -31,7 +31,7 @@ RSpec.describe(Dog) do
       stderr = "Got 199 problems"
       fakedog = FakeCLI.err(exitcode:, stderr:)
 
-      expect { Dog.ips("", fakedog) }.to(raise_error(Dog::Error, /#{stderr}/))
+      expect { Dog.ips("", fakedog) }.to(raise_error(Dog::Errors::Unexpected, /#{stderr}/))
     end
   end
 end

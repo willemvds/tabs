@@ -32,7 +32,7 @@ begin
     File.join(ROOT_DIR, "bin/check/check.toml"), symbolize_keys: true
   )
   config.merge(local_config)
-rescue StandardError # rubocop:disable Lint/SuppressedException
+rescue StandardError
   # This is an optional step - it is allowed to fail silently.
 end
 
