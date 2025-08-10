@@ -11,20 +11,7 @@ module Tabs
     end
 
     def self.domain(fqdn)
-      begin
-        ips = Subprocess.check_output(["dog", "-1", fqdn]).split
-      rescue Subprocess::NonZeroExit => e
-        raise Bad, e.message
-      rescue StandardError => e
-        puts "dog err=#{e.message}"
-        puts "falling back on dig..."
-        begin
-          ips = Subprocess.check_output(["dig", fqdn, "+short"]).split
-        rescue StandardError => e
-          puts "dig err=#{e.message}"
-          raise Bad, e.message
-        end
-      end
+      ips = DNS.addresses(fqdn)
 
       uri = URI("https://#{fqdn}/")
 

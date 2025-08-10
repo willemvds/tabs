@@ -52,8 +52,8 @@ queue = channel.queue(
 domains.each do |fqdn|
   begin
     event = Tabs::Check.domain(fqdn)
-  rescue Tabs::Check::Bad => e
-    puts "check domain err=#{e.message}"
+  rescue StandardError => e
+    puts "check domain=#{fqdn} err=#{e.message}"
   end
 
   event_json = JSON.generate(event)
