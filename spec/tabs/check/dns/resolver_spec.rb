@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "timeout"
+
 RSpec.describe(Tabs::Check::DNS::Resolver) do
   context ".new" do
     it "raises if no services" do
@@ -43,6 +45,11 @@ RSpec.describe(Tabs::Check::DNS::Resolver) do
 
       it "translates Dig::BinaryUnavailable" do
         r = Tabs::Check::DNS::Resolver.new("doesntmatter", dig: DNSResolverServiceMock.raising(Dig::BinaryUnavailable))
+        expect { r.ips }.to(raise_error(Tabs::Check::DNS::Errors::ServiceUnavailable))
+      end
+
+      it "translates Timeout::Error" do
+        r = Tabs::Check::DNS::Resolver.new("doesntmatter", dig: DNSResolverServiceMock.raising(Timeout::Error))
         expect { r.ips }.to(raise_error(Tabs::Check::DNS::Errors::ServiceUnavailable))
       end
     end

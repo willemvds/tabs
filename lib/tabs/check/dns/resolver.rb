@@ -1,9 +1,13 @@
 # frozen_string_literal: true
 
+require "timeout"
+
 module Tabs
   module Check
     module DNS
       class Resolver
+        DEFAULT_TIMEOUT_SECONDS = 5
+
         def initialize(fqdn, dog: nil, dig: nil)
           if dog.nil? && dig.nil?
             raise Errors::ResolverServiceRequired
@@ -45,8 +49,12 @@ module Tabs
         end
 
         def resolve_using_dog
-          ips = @dog.ips(@fqdn)
-          ok(ips)
+          Timeout.timeout(DEFAULT_TIMEOUT_SECONDS) do
+            ips = @dog.ips(@fqdn)
+            ok(ips)
+          end
+        rescue Timeout::Error
+          :has_dig
         rescue Dog::InvalidFQDN
           err(Errors::InvalidFQDN.new)
         rescue Dog::NoResults
@@ -56,8 +64,12 @@ module Tabs
         end
 
         def resolve_using_dig
-          ips = @dig.ips(@fqdn)
-          ok(ips)
+          Timeout.timeout(DEFAULT_TIMEOUT_SECONDS) do
+            ips = @dig.ips(@fqdn)
+            ok(ips)
+          end
+        rescue Timeout::Error
+          err(Errors::ServiceUnavailable.new)
         rescue Dig::NoResults
           err(Errors::NoRecordsFound.new)
         rescue Dig::Error, Dig::BinaryUnavailable
