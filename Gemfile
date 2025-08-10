@@ -19,3 +19,7 @@ group :development do
   gem "rubocop", "~> 1.78", require: false
   gem "rubocop-shopify", "~> 2.17", require: false
 end
+
+group :test do
+  gem "simplecov", "~> 0.22.0", require: false
+end

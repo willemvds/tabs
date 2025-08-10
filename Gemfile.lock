@@ -44,6 +44,7 @@ GEM
       fiber-local (~> 1.1)
       json
     diff-lcs (1.6.2)
+    docile (1.4.1)
     falcon (0.51.1)
       async
       async-container (~> 0.20)
@@ -134,6 +135,12 @@ GEM
       console (~> 1.0)
       mapping (~> 1.0)
     set (1.1.2)
+    simplecov (0.22.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.13.2)
+    simplecov_json_formatter (0.1.4)
     sorted_set (1.0.3)
       rbtree
       set (~> 1.0)
@@ -163,6 +170,7 @@ DEPENDENCIES
   rspec (~> 3.13)
   rubocop (~> 1.78)
   rubocop-shopify (~> 2.17)
+  simplecov (~> 0.22.0)
   sqlite3 (~> 2.6)
   subprocess (~> 1.5)
   toml-rb (~> 4.0)

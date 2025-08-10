@@ -16,6 +16,13 @@
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
+require "simplecov"
+SimpleCov.start do
+  add_filter "dev/"
+  add_filter "test/"
+  add_filter "vendor/"
+end
+
 require_relative "../autoloader"
 
 require "fileutils"
