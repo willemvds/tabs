@@ -43,13 +43,13 @@ RSpec.describe(Tabs::Check::DNS::Resolver) do
     end
 
     context "using dig" do
-    it "returns the service result" do
-      fqdn = "vds.io"
-      r = Tabs::Check::DNS::Resolver.new(fqdn, dig: DNSResolverServiceMock.returning_ips(["4.3.2.1"]))
-      ips = r.ips
+      it "returns the service result" do
+        fqdn = "vds.io"
+        r = Tabs::Check::DNS::Resolver.new(fqdn, dig: DNSResolverServiceMock.returning_ips(["4.3.2.1"]))
+        ips = r.ips
 
-      expect(ips).to(eq(["4.3.2.1"]))
-    end
+        expect(ips).to(eq(["4.3.2.1"]))
+      end
       it "translates Dig::NoResults" do
         r = Tabs::Check::DNS::Resolver.new("doesntmatter", dig: DNSResolverServiceMock.raising(Dig::NoResults))
         expect { r.ips }.to(raise_error(Tabs::Check::DNS::Errors::NoRecordsFound))
