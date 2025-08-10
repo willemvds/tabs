@@ -2,5 +2,7 @@
 
 module Tabs
   module Errors
+    class EntityExists < StandardError
+    end
   end
 end
