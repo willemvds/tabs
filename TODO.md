@@ -6,6 +6,7 @@
 - Missing domain tests.
 - Move CLI code from bin to ui/cli.
 - CLI unit tests.
+- Work through the Rubocop offenses.
 - Make the test suite make a db for shared context at the start then just copy that file as needed.
 - Favicon!
 - Lots of static/web/ui things.
