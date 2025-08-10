@@ -1,0 +1,14 @@
+# TODO
+- Extract all embedded classes into their own file.
+- HTTPS module for Check.
+- Track all domains ips.
+- Add more SSL cert details like SAN/wildcard.
+- Missing domain tests.
+- Move CLI code from bin to ui/cli.
+- CLI unit tests.
+- Make the test suite make a db for shared context at the start then just copy that file as needed.
+- Favicon!
+- Lots of static/web/ui things.
+- Log archiving.
+- Consider a container that matches prod for building deployment with vendor included.
+- Experiment with Sorbet.
