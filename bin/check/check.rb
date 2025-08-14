@@ -29,7 +29,7 @@ config = {
 
 begin
   local_config = TomlRB.load_file(
-    File.join(ROOT_DIR, "bin/check/check.toml"), symbolize_keys: true
+    File.join(ROOT_PATH, "bin/check/check.toml"), symbolize_keys: true
   )
   config.merge(local_config)
 rescue StandardError

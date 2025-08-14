@@ -10,7 +10,7 @@ module Cli
         exit(EXITCODE_USAGE)
       end
 
-      db_path = File.join(ROOT_DIR, "storage/tabs.db")
+      db_path = File.join(ROOT_PATH, "storage/tabs.db")
       db = SQLite3::Database.new(db_path)
 
       args[0]

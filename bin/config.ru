@@ -7,18 +7,16 @@ require "sqlite3"
 DEFAULT_QUEUE_NAME = "https"
 config = {
   queue_name: DEFAULT_QUEUE_NAME,
-  db_path: File.join(ROOT_DIR, "storage/tabs.db"),
+  db_path: File.join(ROOT_PATH, "storage/tabs.db"),
 }
 
 begin
   local_config = TomlRB.load_file(
-    File.join(ROOT_DIR, "storage/tabs.toml"), symbolize_keys: true
+    File.join(ROOT_PATH, "storage/tabs.toml"), symbolize_keys: true
   )
   config.merge(local_config)
 rescue StandardError
 end
-
-# DB_PATH = File.join(ROOT_DIR, 'storage/tabs.db')
 
 begin
   db = SQLite3::Database.new(config[:db_path])
