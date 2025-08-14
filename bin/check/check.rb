@@ -38,7 +38,7 @@ end
 
 domains_path = args[0]
 domains = File.read(domains_path).split
-domains = domains.select { |domain| domain.length > 0 }
+domains = domains.select { |domain| !domain.empty? }
 
 connection = Bunny.new
 connection.start

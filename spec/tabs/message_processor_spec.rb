@@ -31,8 +31,8 @@ RSpec.describe(Tabs::MessageProcessor) do
         cert_issuer: msg[:cert][:issuer],
         cert_subject: msg[:cert][:subject],
         cert_serial: msg[:cert][:serial],
-        cert_not_before: DateTime.parse(msg[:cert][:not_before]),
-        cert_not_after: DateTime.parse(msg[:cert][:not_after]),
+        cert_not_before: Time.parse(msg[:cert][:not_before]),
+        cert_not_after: Time.parse(msg[:cert][:not_after]),
         response_body_length: msg[:response][:body_length],
       }
       expect(pr).to(eq([msg[:fqdn], expected_fields_param]))

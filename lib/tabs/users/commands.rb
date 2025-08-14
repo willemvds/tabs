@@ -20,7 +20,7 @@ module Tabs
       VALUES
         (?, ?, ?, ?)
       "
-        created_at = DateTime.now
+        created_at = Time.now
         begin
           db.transaction
           db.execute(create_user_query, [

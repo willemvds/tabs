@@ -56,8 +56,8 @@ module Tabs
         cert_issuer: cert.fetch(:issuer),
         cert_subject: cert.fetch(:subject),
         cert_serial: cert.fetch(:serial),
-        cert_not_before: DateTime.parse(cert.fetch(:not_before)),
-        cert_not_after: DateTime.parse(cert.fetch(:not_after)),
+        cert_not_before: Time.parse(cert.fetch(:not_before)),
+        cert_not_after: Time.parse(cert.fetch(:not_after)),
         response_body_length: response.fetch(:body_length),
       }
       @process_block.call(fqdn, fields)

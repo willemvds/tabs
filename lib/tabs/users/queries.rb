@@ -37,7 +37,7 @@ module Tabs
           ROOT_ID,
           "root",
           User::ACTIVE,
-          DateTime.now,
+          Time.now,
           ROOT_ID,
         )
       end

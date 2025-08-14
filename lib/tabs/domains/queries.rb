@@ -53,8 +53,8 @@ module Tabs
           cert_issuer: row[3],
           cert_subject: row[4],
           cert_serial: row[5],
-          cert_not_before: DateTime.parse(row[6]),
-          cert_not_after: DateTime.parse(row[7]),
+          cert_not_before: Time.parse(row[6]),
+          cert_not_after: Time.parse(row[7]),
           response_body_length: row[8],
           created_at: row[9],
         }
@@ -98,8 +98,8 @@ module Tabs
             cert_issuer: row[3],
             cert_subject: row[4],
             cert_serial: row[5],
-            cert_not_before: DateTime.parse(row[6]),
-            cert_not_after: DateTime.parse(row[7]),
+            cert_not_before: Time.parse(row[6]),
+            cert_not_after: Time.parse(row[7]),
             response_body_length: row[8],
             created_at: row[9],
           }

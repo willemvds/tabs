@@ -18,7 +18,7 @@ module Tabs
         VALUES
           (?, ?)
       "
-        created_at = DateTime.now.to_s
+        created_at = Time.now.to_s
         begin
           db.execute(create_query, [fqdn, created_at])
         rescue SQLite3::ConstraintException
@@ -88,7 +88,7 @@ module Tabs
           end
           v
         end
-        created_at = DateTime.now
+        created_at = Time.now
         new_values = [fqdn] + new_values + [created_at.to_s]
         db.execute(create_status_query, new_values)
       end

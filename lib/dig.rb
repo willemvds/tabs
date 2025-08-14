@@ -26,7 +26,7 @@ module Dig
 
     ips = stdout.split
 
-    raise NoResults if ips.length == 0
+    raise NoResults if ips.empty?
 
     ips
   end

@@ -33,7 +33,7 @@ module Tabs
 
         request = Net::HTTP::Get.new(uri)
         #  puts request
-        request_started_at = DateTime.now
+        request_started_at = Time.now
         body_length = 0
         response_code = 0
         response_message = ""
@@ -46,7 +46,7 @@ module Tabs
           response_code = response.code
           response_message = response.message
         end
-        request_completed_at = DateTime.now
+        request_completed_at = Time.now
         duration = request_completed_at - request_started_at
         duration_us = (duration * 24 * 60 * 60 * 1000 * 1000).to_i
         duration_ms = duration_us / 1000
