@@ -92,37 +92,6 @@ module Tabs
         new_values = [fqdn] + new_values + [created_at.to_s]
         db.execute(create_status_query, new_values)
       end
-
-      def self.create_tables!(db)
-        create_domains_query = "
-        CREATE TABLE IF NOT EXISTS
-          domains (
-            fqdn VARCHAR(1000) PRIMARY KEY UNIQUE,
-            created_at DATETIME NOT NULL
-          )
-      "
-
-        db.execute(create_domains_query)
-
-        create_statuses_query = "
-        CREATE TABLE IF NOT EXISTS
-          domain_statuses (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            fqdn VARCHAR(1000) NOT NULL,
-            ip VARCHAR(54),
-            is_online BOOLEAN NOT NULL,
-            cert_issuer VARCHAR(1000) NOT NULL,
-            cert_subject VARCHAR(1000) NOT NULL,
-            cert_serial VARCHAR(1000) NOT NULL,
-            cert_not_before DATETIME NOT NULL,
-            cert_not_after DATETIME NOT NULL,
-            response_body_length INTEGER NOT NULL,
-            created_at DATETIME NOT NULL,
-            FOREIGN KEY(fqdn) REFERENCES domains(fqdn)
-          )
-      "
-        db.execute(create_statuses_query)
-      end
     end
   end
 end

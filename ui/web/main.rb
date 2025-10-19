@@ -14,8 +14,9 @@ module Web
       @index_template = ERB.new(File.read(File.join(File.dirname(__FILE__), "templates/index.rhtml")))
 
       @db = SQLite3::Database.new(@db_path)
+      Tabs::Versions::Commands.create_tables!(@db)
       Tabs::Users::Commands.create_tables!(@db)
-      Tabs::Domains::Commands.create_tables!(@db)
+      Tabs::Domains::Migrations.migrate!(@db)
     end
 
     def call(env)
