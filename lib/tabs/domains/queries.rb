@@ -74,6 +74,7 @@ module Tabs
           cert_serial,
           cert_not_before,
           cert_not_after,
+          cert_sans,
           response_body_length,
           domain_statuses.created_at
         FROM
@@ -102,8 +103,9 @@ module Tabs
             cert_serial: row[5],
             cert_not_before: Time.parse(row[6]),
             cert_not_after: Time.parse(row[7]),
-            response_body_length: row[8],
-            created_at: row[9],
+            cert_sans: row[8],
+            response_body_length: row[9],
+            created_at: row[10],
           }
           Status.new(row[0], fields)
         end
