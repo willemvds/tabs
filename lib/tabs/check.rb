@@ -21,6 +21,12 @@ module Tabs
       Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
         cert = OpenSSL::X509::Certificate.new(http.peer_cert)
 
+        sans = []
+        san_extension = cert.extensions.find { |ext| ext.oid == "subjectAltName" }
+        if san_extension
+          sans = san_extension.value.split(",").map(&:strip)
+        end
+
         event = event.merge({
           "cert": {
             "subject": cert.subject,
@@ -28,6 +34,7 @@ module Tabs
             "serial": cert.serial,
             "not_before": cert.not_before,
             "not_after": cert.not_after,
+            "sans": sans,
           },
         })
 
