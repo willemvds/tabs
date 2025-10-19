@@ -31,8 +31,11 @@ module Tabs
           puts "delivery info #{delivery_info}"
           puts "properties #{_properties}"
           puts "body #{body}"
-          msg = JSON.parse(body, symbolize_names: true)
-          process(msg)
+          if body
+            msg = JSON.parse(body, symbolize_names: true)
+            puts "msg #{msg}"
+            process(msg)
+          end
           channel.acknowledge(delivery_info.delivery_tag, false)
         end
       end
@@ -58,6 +61,7 @@ module Tabs
         cert_serial: cert.fetch(:serial),
         cert_not_before: Time.parse(cert.fetch(:not_before)),
         cert_not_after: Time.parse(cert.fetch(:not_after)),
+        cert_sans: cert.fetch(:sans, []),
         response_body_length: response.fetch(:body_length),
       }
       @process_block.call(fqdn, fields)

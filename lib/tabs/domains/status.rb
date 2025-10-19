@@ -13,6 +13,7 @@ module Tabs
         :cert_serial,
         :cert_not_before,
         :cert_not_after,
+        :cert_sans,
         :response_body_length,
         :created_at
 
@@ -25,6 +26,7 @@ module Tabs
         @cert_serial = args.fetch(:cert_serial)
         @cert_not_before = args.fetch(:cert_not_before)
         @cert_not_after = args.fetch(:cert_not_after)
+        @cert_sans = args.fetch(:cert_sans)
         @response_body_length = args.fetch(:response_body_length)
         @created_at = args.fetch(:created_at)
       end
