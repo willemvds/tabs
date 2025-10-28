@@ -34,6 +34,10 @@ module Tabs
       def online?
         @is_online
       end
+
+      def wildcard?
+        @cert_subject.start_with?("/CN=*")
+      end
     end
   end
 end
