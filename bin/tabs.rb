@@ -7,8 +7,10 @@ require_relative "../autoloader"
 EXIT_CODE_USAGE = 1
 
 args = ARGV
-if args.length < 2
+if args.length < 1
   puts "Usage: tabs <command>"
+  puts "Commands:"
+  puts "  - tabs domains"
   exit(EXIT_CODE_USAGE)
 end
 
