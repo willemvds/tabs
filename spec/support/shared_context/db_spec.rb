@@ -11,8 +11,9 @@ RSpec.shared_context("db") do
     @test_db_path = File.join(File.dirname(__FILE__), "#{random_hex_name}.db")
     test_db = SQLite3::Database.new(@test_db_path)
 
+    Tabs::Versions::Commands.create_tables!(test_db)
     Tabs::Users::Commands.create_tables!(test_db)
-    Tabs::Domains::Commands.create_tables!(test_db)
+    Tabs::Domains::Migrations.migrate!(test_db)
 
     @test_db = test_db
   end

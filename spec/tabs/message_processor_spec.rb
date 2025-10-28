@@ -15,6 +15,7 @@ RSpec.describe(Tabs::MessageProcessor) do
           serial: "Everybody",
           not_before: "2024-12-31",
           not_after: "2025-12-31",
+          sans: "DNS:this.n.that,DNS:www.this.n.that",
         },
         response: {
           code: 200,
@@ -33,6 +34,7 @@ RSpec.describe(Tabs::MessageProcessor) do
         cert_serial: msg[:cert][:serial],
         cert_not_before: Time.parse(msg[:cert][:not_before]),
         cert_not_after: Time.parse(msg[:cert][:not_after]),
+        cert_sans: msg[:cert][:sans],
         response_body_length: msg[:response][:body_length],
       }
       expect(pr).to(eq([msg[:fqdn], expected_fields_param]))
