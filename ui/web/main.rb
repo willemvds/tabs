@@ -48,6 +48,7 @@ module Web
     end
 
     def index(_req)
+      @index_template = ERB.new(File.read(File.join(File.dirname(__FILE__), "templates/index.rhtml")))
       statuses = Tabs::Domains::Queries.most_recent_statuses(@db)
 
       statuses.each do |status|

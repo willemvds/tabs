@@ -32,6 +32,8 @@ module Tabs
           cert_not_before,
           cert_not_after,
           cert_sans,
+          response_http_version,
+          response_time_ms,
           response_body_length,
           created_at
         FROM
@@ -57,8 +59,10 @@ module Tabs
           cert_not_before: Time.parse(row[6]),
           cert_not_after: Time.parse(row[7]),
           cert_sans: row[8],
-          response_body_length: row[9],
-          created_at: row[10],
+          response_http_version: row[9],
+          response_time_ms: row[10],
+          response_body_length: row[11],
+          created_at: row[12],
         }
         Status.new(fqdn, fields)
       end
@@ -75,6 +79,8 @@ module Tabs
           cert_not_before,
           cert_not_after,
           cert_sans,
+          response_http_version,
+          response_time_ms,
           response_body_length,
           domain_statuses.created_at
         FROM
@@ -104,8 +110,10 @@ module Tabs
             cert_not_before: Time.parse(row[6]),
             cert_not_after: Time.parse(row[7]),
             cert_sans: row[8],
-            response_body_length: row[9],
-            created_at: row[10],
+            response_http_version: row[9],
+            response_time_ms: row[10],
+            response_body_length: row[11],
+            created_at: row[12],
           }
           Status.new(row[0], fields)
         end

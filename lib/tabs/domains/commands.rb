@@ -37,6 +37,8 @@ module Tabs
         :cert_not_before,
         :cert_not_after,
         :cert_sans,
+        :response_http_version,
+        :response_time_ms,
         :response_body_length,
       ].freeze
 
@@ -52,6 +54,8 @@ module Tabs
             cert_not_before: current.cert_not_before,
             cert_not_after: current.cert_not_after,
             cert_sans: current.cert_sans,
+            response_http_version: current.response_http_version,
+            response_time_ms: current.response_time_ms,
             response_body_length: current.response_body_length,
           }
         rescue Errors::NotFound
@@ -78,11 +82,13 @@ module Tabs
             cert_not_before,
             cert_not_after,
             cert_sans,
+            response_http_version,
+            response_time_ms,
             response_body_length,
             created_at
           )
         VALUES
-          (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       "
 
         new_values = UPDATE_DIFF_FIELDS.map do |field|

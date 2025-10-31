@@ -50,6 +50,7 @@ module Tabs
     def process(msg)
       fqdn = msg.fetch(:fqdn)
       cert = msg.fetch(:cert)
+      request = msg.fetch(:request)
       response = msg.fetch(:response)
       ips = msg.fetch(:ips).sort!
       ip = ips.first
@@ -62,6 +63,8 @@ module Tabs
         cert_not_before: Time.parse(cert.fetch(:not_before)),
         cert_not_after: Time.parse(cert.fetch(:not_after)),
         cert_sans: cert.fetch(:sans, []),
+        response_http_version: response.fetch(:http_version),
+        response_time_ms: request.fetch(:duration_ms),
         response_body_length: response.fetch(:body_length),
       }
       @process_block.call(fqdn, fields)

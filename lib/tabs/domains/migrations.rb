@@ -13,6 +13,10 @@ module Tabs
         if version < 2
           m2!(db)
         end
+
+        if version < 3
+          m3!(db)
+        end
       end
 
       def self.create_tables!(db)
@@ -58,6 +62,23 @@ module Tabs
           db.execute(m2_query)
           db.execute(m2_query2)
           Tabs::Versions::Commands.set!(db, "domains_statuses", 2)
+        end
+      end
+
+      def self.m3!(db)
+        m3_query = <<-SQL
+          ALTER TABLE domain_statuses
+          ADD COLUMN response_http_version VARCHAR(20) NOT NULL DEFAULT ''
+        SQL
+        m3_query2 = <<-SQL
+          ALTER TABLE domain_statuses
+          ADD COLUMN response_time_ms INTEGER DEFAULT 0
+        SQL
+
+        db.transaction do
+          db.execute(m3_query)
+          db.execute(m3_query2)
+          Tabs::Versions::Commands.set!(db, "domains_statuses", 3)
         end
       end
     end

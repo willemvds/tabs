@@ -14,6 +14,8 @@ module Tabs
         :cert_not_before,
         :cert_not_after,
         :cert_sans,
+        :response_http_version,
+        :response_time_ms,
         :response_body_length,
         :created_at
 
@@ -26,7 +28,9 @@ module Tabs
         @cert_serial = args.fetch(:cert_serial)
         @cert_not_before = args.fetch(:cert_not_before)
         @cert_not_after = args.fetch(:cert_not_after)
-        @cert_sans = args.fetch(:cert_sans)
+        @cert_sans = args.fetch(:cert_sans).split(",")
+        @response_http_version = args.fetch(:response_http_version)
+        @response_time_ms = args.fetch(:response_time_ms)
         @response_body_length = args.fetch(:response_body_length)
         @created_at = args.fetch(:created_at)
       end
@@ -36,7 +40,21 @@ module Tabs
       end
 
       def wildcard?
-        @cert_subject.start_with?("/CN=*")
+        @wildcard ||= @cert_subject.start_with?("/CN=*")
+      end
+
+      def cert_issuer_organisation
+        @cert_issuer_organisation ||= begin
+          cio = ""
+
+          matches = %r{/O=(.*)/}.match(@cert_issuer)
+          if matches.length == 2
+            cio = matches[1]
+            # return matches[1]
+          end
+
+          cio
+        end
       end
     end
   end

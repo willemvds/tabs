@@ -19,6 +19,18 @@
         --theme-fg: #ebdbb2;
       }
 
+      .text-good {
+        color: var(--theme-green);
+      }
+
+      .text-okay {
+        color: var(--theme-yellow);
+      }
+
+      .text-bad {
+        color: var(--theme-red);
+      }
+
       * {
         margin: 0;
         padding: 0;
@@ -34,14 +46,16 @@
 
       .wrapper {
         display: grid;
-        grid-template-columns: 1fr 40px 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
       }
 
       .entry {
-        min-width: 800px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
         background-color: var(--theme-bg-shallow);
         color: var(--theme-fg);
         margin: 0 0 1em 0;
+        width: 100%;
       }
 
       .domain {
@@ -56,15 +70,22 @@
         color: var(--theme-green);
       }
 
+      main {
+        display: grid;
+        grid-template-columns: 1fr minmax(800px, 1000px) 1fr;
+      }
+
       div.main {
         margin-top: 6%;
         display: grid;
         place-items: center;
-        #display: flex;
-        #align-items: center;
-        #justify-content: center;
-
+        width: 100%;
         gap: 30 0;
+      }
+
+
+      div.entry-header {
+        display: flex;
       }
 
       div.online {
@@ -83,49 +104,98 @@
         font-weight: bold;
       }
 
-      div.cert {
-        display: grid;
-        place-items: center;
+      div.header-right {
+        display: flex;
+        align-items: center;
       }
 
-      div.size {
-        display: grid;
-        place-items: center;
+      div.ip {
+        align-items: center;
+        padding-left: 14pt;
+        padding-right: 14pt;
+        width: 100%;
+      }
+
+      div.cert {
+        padding-top: 10pt;
+        padding-bottom: 10pt;
+        text-align: center;
+      }
+
+      div.cert p {
+        margin-top: 5pt;
+        margin-bottom: 0;
+      }
+
+      div.cert p.expires {
+        margin-bottom: 20pt;
+      }
+
+      div.http {
+        text-align: center;
+        padding-top: 10pt;
+        padding-bottom: 10pt;
+      }
+
+      div.http p {
+        margin-top: 5pt;
+        margin-bottom: 0;
       }
 
       .triangle {
         width: 2px;
         clip-path: polygon(0 0, 0 100%, 100% 50%);
       }
+
       p {
         padding: 0;
         margin: 0;
         margin-top: 5px;
       }
+
+      p.label {
+        padding-top: 4pt;
+        border-bottom: 2pt solid var(--theme-bg-deep);
+        font-size: 12pt;
+        color: var(--theme-bg-deep);
+      }
     </style>
   </head>
   <body>
     <main>
+      <div></div>
       <div class="main">
-        <%domains.each do |domain| %> <%online_class = if domain.online? then "online" else "offline" end%>
-        <div class="wrapper entry">
-          <div class="<%=online_class%>">
-            <p><%= domain.fqdn %></p>
-          </div>
-          <div class="<%=online_class%> triangle"></div>
-          <div class="cert">
-            <p><%= domain.cert_not_after.strftime("%Y-%m-%d") %></p>
-          </div>
-          <div class="size">
-            <p>
-              <span class="bytes"><%= domain.response_body_length %></span>
-              bytes
-            </p>
+        <%domains.each do |domain| %>
+          <% online_class = if domain.online? then "online" else "offline" end %>
+          <% response_time_ms = domain.response_time_ms %>
+          <% http_version = domain.response_http_version %>
+          <% body_length = domain.response_body_length %>
+          <% expire_days = TimeFormat::days_until(domain.cert_not_after) %>
+          <div class="entry">
+            <div>
+              <div class="entry-header">
+                <div class="<%=online_class%>">
+                  <p><%= domain.fqdn %></p>
+                </div>
+                <div class="<%=online_class%> triangle"></div>
+              </div>
+            </div>
+            <div class="cert">
+              <p class="expires"><%= domain.cert_not_after.strftime("%Y-%m-%d") %> (In <span class="text-<%= Web::Style::expire_days_css_class(expire_days) %>"><%= expire_days %></span> days.)</p>
+            </div>
+            <div class="http">
+              <div>
+                <p>HTTP <span class="text-<%= Web::Style::http_version_css_class(http_version) %>"><%= http_version %></span></p>
+              </div>
+              <div>
+                <p><span class="text-<%= Web::Style::ping_css_class(response_time_ms) %>"><%= response_time_ms %></span> ms</p>
+              </div>
+              <p><span class="text-<%= Web::Style::body_length_css_class(body_length) %>"><%= body_length  %></span> bytes</p>
           </div>
         </div>
-        <br />
         <%end %>
       </div>
+      <div></div>
     </main>
   </body>
 </html>
